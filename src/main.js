@@ -40,6 +40,7 @@ import { Picker } from 'vant';
 import { Uploader } from 'vant';
 import { Overlay } from 'vant';
 import { Loading } from 'vant';
+import { BackTop } from 'vant';
 
 import '@vant/touch-emulator';
 
@@ -93,7 +94,7 @@ app.use(Uploader);
 app.use(Overlay);
 app.use(Loading);
 app.use(PullRefresh);
-
+app.use(BackTop);
 
 app.use(router)
 
