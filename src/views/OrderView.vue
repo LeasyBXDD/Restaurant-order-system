@@ -1,5 +1,4 @@
 <template>
-    <van-cell v-for="item in list" :key="item" :title="item" />
     <van-back-top bottom="150px"/>
 
     <van-search v-model="value" placeholder="请输入搜索关键词" />
@@ -44,16 +43,7 @@
         <van-checkbox v-model="checked">全选</van-checkbox>
     </van-submit-bar>
 
-    <van-tabbar v-model="active" route>
-        <van-tabbar-item replace to="/order">
-            <span>点餐</span>
-            <template #icon="props">
-                <img :src="props.active ? icon.active : icon.inactive" />
-            </template>
-        </van-tabbar-item>
-        <van-tabbar-item icon="search" replace to="/">登录</van-tabbar-item>
-        <van-tabbar-item icon="setting-o" replace to="/forget">忘记</van-tabbar-item>
-    </van-tabbar>
+    <Nav></Nav>
 </template>
 
 <script>
@@ -85,9 +75,16 @@ import 'vant/es/card/style'
 import 'vant/es/tag/style'
 import 'vant/es/tree-select/style'
 import 'vant/es/back-top/style'
+import 'vant/es/cell/style'
+import 'vant/es/cell-group/style'
+import 'vant/es/submit-bar/style'
+import Nav from '../components/Nav.vue';
 
 
 export default {
+    components: {
+        Nav,
+    },
     setup() {
         const value = ref('');
         const active = ref(0);
@@ -139,6 +136,7 @@ export default {
     },
     data() {
         return {
+            checked: false,
             goodsList: [
                 {
                     num: 2,
@@ -216,5 +214,11 @@ export default {
             ],
         };
     },
+    methods: {
+        onSubmit() {
+            Toast('提交订单');
+        },
+    }
+
 };
 </script>

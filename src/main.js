@@ -41,6 +41,8 @@ import { Uploader } from 'vant';
 import { Overlay } from 'vant';
 import { Loading } from 'vant';
 import { BackTop } from 'vant';
+import { Cell } from 'vant';
+import { Step, Steps } from 'vant';
 
 import '@vant/touch-emulator';
 
@@ -95,6 +97,10 @@ app.use(Overlay);
 app.use(Loading);
 app.use(PullRefresh);
 app.use(BackTop);
+app.use(Cell);
+app.use(Step);
+app.use(Steps);
+
 
 app.use(router)
 

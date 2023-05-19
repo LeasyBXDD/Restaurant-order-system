@@ -1,4 +1,5 @@
 <template>
+  <!-- 手机头部样式 -->
   <van-config-provider :theme="theme.value">
     <van-pull-refresh v-model="loading" :head-height="80" @refresh="onRefresh">
       <!-- 下拉提示，通过 scale 实现一个缩放效果 -->
