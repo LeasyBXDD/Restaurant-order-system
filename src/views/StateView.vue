@@ -1,10 +1,15 @@
 <template>
     <van-space :size="20" direction="vertical">
         <!-- 通知栏 -->
-        <van-notice-bar left-icon="volume-o" text="无论我们能活多久，我们能够享受的只有无法分割的此刻，此外别无其他。" />
+        <van-notice-bar left-icon="volume-o" text="今日土豆牛腩汤加量不加价！小众点评打卡本店即可享受小份免费升大份！" />
         <!-- 订单信息 -->
-        <h4>{{ orderDay }} {{ orderTime }} 的订单</h4>
-        <van-card num="123456789" price="1234.56" desc="描述信息" title="订单标题" thumb="https://img.yzcdn.cn/vant/ipad.jpeg" />
+        <h3 style="font-weight:bolder">下单成功！
+            <span style="font-size: small; font-weight: bold;">
+                <br>后厨正在拼命备餐o(≧口≦)o
+            </span>
+        </h3>
+        <van-card :num="123456789" :price="1234.56" desc="每天都要好好吃饭哦" :title="`${orderDay} ${orderTime} 的订单`"
+            thumb="/assets/images/order-thumb.png" />
         <h4 style="text-align: center;">预计还要：{{ remainingTime }} 分钟</h4>
         <!-- 进度条 -->
         <van-steps :active="active" click-step>
@@ -15,7 +20,7 @@
         </van-steps>
         <!-- 显示订购餐品的内容并显示是否出餐 -->
         <van-list>
-            <h4 style="margin: 10px;">餐品详情</h4>
+            <h4 style="margin: 10px; font-weight: bolder;">出餐情况</h4>
             <van-cell v-for="(dish, index) in dishes" :key="index" :title="dish.name" :value="dish.status" />
         </van-list>
 

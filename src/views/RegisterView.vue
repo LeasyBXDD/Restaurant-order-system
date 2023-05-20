@@ -10,7 +10,8 @@
         <van-row justify="center">
             <h5>登录前请先注册</h5>
         </van-row>
-       
+        <van-row style="margin-bottom: 10px;">
+        </van-row>
         <van-form @submit="onSubmit">
             <van-cell-group inset>
                 <van-field v-model="username" name="电话" label="电话" placeholder="电话"

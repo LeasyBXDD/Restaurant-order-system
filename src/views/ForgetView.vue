@@ -1,6 +1,6 @@
 <template>
 
-  <van-row justify="center">
+  <van-row justify="center" style="margin: 10px;">
     <h1>修改密码</h1>
   </van-row>
   <van-row justify="center">
@@ -20,7 +20,7 @@
       :rules="[{ required: true, message: '请输入新密码' }, { min: 6, message: '密码长度不能少于6位' }]" />
     <van-field v-model="confirmPassword" name="confirmPassword" label="确认密码" type="password" placeholder="请再次输入新密码"
       :rules="[{ required: true, message: '请再次输入新密码' }, { validator: validateConfirmPassword, message: '两次输入的密码不一致' }]" />
-    <van-button type="primary" block native-type="submit" style="margin: 10px;">提交</van-button>
+    <van-button type="primary" block native-type="submit" style="margin: 10px; margin-top: 20px;">提交</van-button>
   </van-form>
 </template>
 

@@ -12,8 +12,7 @@
         <van-row justify="center">
             <h5>点餐前请先登录</h5>
         </van-row>
-        <van-row justify="center">
-            <van-image round width="6rem" height="6rem" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+        <van-row style="margin-bottom: 10px;">
         </van-row>
         <van-form @submit="onSubmit">
             <van-cell-group inset>

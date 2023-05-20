@@ -43,6 +43,7 @@ import { Loading } from 'vant';
 import { BackTop } from 'vant';
 import { Cell } from 'vant';
 import { Step, Steps } from 'vant';
+import { Calendar } from 'vant';
 
 import '@vant/touch-emulator';
 
@@ -100,7 +101,7 @@ app.use(BackTop);
 app.use(Cell);
 app.use(Step);
 app.use(Steps);
-
+app.use(Calendar);
 
 app.use(router)
 
