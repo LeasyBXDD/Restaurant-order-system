@@ -18,6 +18,15 @@
             <van-cell-group inset>
                 <van-field v-model="username" name="电话" label="电话" placeholder="电话"
                     :rules="[{ required: true, message: '请填写电话号码' }]" />
+                <!-- 验证码 -->
+                <van-field v-model="code" name="验证码" label="验证码" placeholder="验证码"
+                    :rules="[{ required: true, message: '请填写验证码' }]">
+                    <template #button>
+                        <van-button type="primary" size="small" :disabled="codeBtnDisabled" @click="sendCode">
+                            {{ codeBtnText }}
+                        </van-button>
+                    </template>
+                </van-field>
                 <van-field v-model="password" type="password" name="密码" label="密码" placeholder="密码"
                     :rules="[{ required: true, message: '请填写密码' }]" />
             </van-cell-group>
@@ -63,11 +72,31 @@ export default {
         const onSubmit = (values) => {
             console.log('submit', values);
         };
+        const codeBtnText = ref('获取验证码');
+        const codeBtnDisabled = ref(false);
+        const sendCode = () => {
+            // 发送验证码逻辑
+            showSuccessToast('验证码已发送');
+            codeBtnDisabled.value = true;
+            let count = 60;
+            const timer = setInterval(() => {
+                count--;
+                if (count <= 0) {
+                    clearInterval(timer);
+                    codeBtnText.value = '获取验证码';
+                    codeBtnDisabled.value = false;
+                } else {
+                    codeBtnText.value = `${count} 秒后重发`;
+                }
+            }, 1000);
+        };
 
         return {
             username,
             password,
+            codeBtnDisabled,
             onSubmit,
+            sendCode,
         };
     },
     methods: {
