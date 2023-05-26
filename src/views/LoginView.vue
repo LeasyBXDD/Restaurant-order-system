@@ -19,19 +19,19 @@
                 <van-field v-model="username" name="电话" label="电话" placeholder="电话"
                     :rules="[{ required: true, message: '请填写电话号码' }]" />
                 <!-- 验证码 -->
-                <van-field v-model="code" name="验证码" label="验证码" placeholder="验证码"
+                <!-- <van-field v-model="code" name="验证码" label="验证码" placeholder="验证码"
                     :rules="[{ required: true, message: '请填写验证码' }]">
                     <template #button>
                         <van-button type="primary" size="small" :disabled="codeBtnDisabled" @click="sendCode">
                             {{ codeBtnText }}
                         </van-button>
                     </template>
-                </van-field>
+                </van-field> -->
                 <van-field v-model="password" type="password" name="密码" label="密码" placeholder="密码"
                     :rules="[{ required: true, message: '请填写密码' }]" />
             </van-cell-group>
             <div style="margin: 16px;">
-                <van-button round block type="primary" to="/order">
+                <van-button round block type="primary" native-type="submit">
                     登录
                 </van-button>
             </div>
@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import { ref, reactive } from 'vue';
 import router from '../router';
 import 'vant/es/notify/style'
@@ -100,6 +102,27 @@ export default {
         };
     },
     methods: {
+        onSubmit() {
+            axios.post('../php/LoginCheck.php', {
+                phone: this.username,
+                pwd: this.password
+            })
+                .then(response => {
+                    if (response.data.success) {
+                        // 登录成功，跳转到订单页面
+                        router.push('/order');
+                        console.log('登录成功');
+                    } else {
+                        // 登录失败，显示错误信息
+                        console.log(this.username);
+                        console.log(this.password);
+                        console.log('登录失败');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
 
     }
 };

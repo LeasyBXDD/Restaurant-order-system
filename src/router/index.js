@@ -48,6 +48,11 @@ const router = createRouter({
       name: 'state',
       component: () => import('../views/StateView.vue')
     },
+    {
+      path: '/test',
+      name: 'test',
+      component: () => import('../views/TestLink.vue')
+    }
   ]
 })
 
