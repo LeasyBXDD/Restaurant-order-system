@@ -103,27 +103,35 @@ export default {
     },
     methods: {
         onSubmit() {
-            axios.post('../php/LoginCheck.php', {
+            axios.post("http://localhost/resphp/loginCheck.php", {
                 phone: this.username,
                 pwd: this.password
+            }, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
             })
                 .then(response => {
-                    if (response.data.success) {
-                        // 登录成功，跳转到订单页面
-                        router.push('/order');
+                    console.log(response.data[0]);
+                    console.log(response.data[0].code);
+                    const data = response.data[0];
+                    if (data.code == 1) {
+                        // 登录成功
                         console.log('登录成功');
-                    } else {
-                        // 登录失败，显示错误信息
-                        console.log(this.username);
-                        console.log(this.password);
-                        console.log('登录失败');
+                        // 跳转到order
+                        router.push('/order');
+                    } else if (data.code === 0) {
+                        // 用户不存在
+                        console.log('用户不存在');
+                    } else if (data.code === 2) {
+                        // 密码错误
+                        console.log('密码错误');
                     }
                 })
                 .catch(error => {
                     console.log(error);
                 });
         }
-
     }
 };
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 登录验证
  */
@@ -9,8 +10,8 @@ $msg = ["用户不存在", "登录成功", "密码错误"];
 
 include('conn.php');
 include("functions.php");
-$userName = $_GET["phone"];
-$userPwd = $_GET["pwd"];
+$userName = $_POST["phone"];
+$userPwd = $_POST["pwd"];
 
 // $userName="13958958107";
 // $userPwd="123456";

@@ -1,44 +1,20 @@
 <template>
-    <van-back-top bottom="150px"/>
+    <van-back-top bottom="150px" />
 
     <van-search v-model="value" placeholder="请输入搜索关键词" />
     <van-notice-bar left-icon="volume-o" text="今日土豆牛腩汤加量不加价！小众点评打卡本店即可享受小份免费升大份！" />
     <van-row>
-        <h5>&nbsp;</h5>
-    </van-row>
-    <van-row>
         <div style="width: 100%;">
-            <van-card v-for="(item, index) in goodsList" :key="index" :num="item.num" :price="item.price" :desc="item.desc"
-                :title="item.title" :thumb="item.thumb" >
-
-                <template #tags>
-                    <van-tag v-for="(tag, tagIndex) in item.tags" :key="tagIndex" plain type="primary">{{ tag }}</van-tag>
-                </template>
+            <van-card v-for="(item, index) in dishes" :key="index" :num="item.dish_weight" :price="item.dish_price"
+                :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id">
                 <template #footer>
-                    <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">
-                        {{ button }}
-                    </van-button>
-
+                    <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">{{ button
+                    }}</van-button>
+                    <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
                 </template>
             </van-card>
         </div>
-
-        <!-- <van-col span="8">
-            <van-sidebar v-model="active">
-                <van-sidebar-item title="来点蔬菜" index="1" />
-                <van-sidebar-item title="大口吃肉" index="2" />
-                <van-sidebar-item title="必点碳水" index="3" />
-                <van-sidebar-item title="美味饮品" index="4" />
-            </van-sidebar>
-        </van-col>
-        <van-col span="16"> -->
-
-        <!-- </van-col> -->
-
-        <!-- <van-tree-select v-model:active-id="activeIds" v-model:main-active-index="activeIndex" :items="items" /> -->
-
     </van-row>
-
     <van-submit-bar :price="3050" button-text="提交订单" @submit="onSubmit" style="margin-bottom: 50px;">
         <van-checkbox v-model="checked">全选</van-checkbox>
     </van-submit-bar>
@@ -47,13 +23,13 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { ref } from 'vue';
 import 'vant/es/pull-refresh/style'
 import 'vant/es/tabbar/style'
 import 'vant/es/tabbar-item/style'
 import 'vant/es/config-provider/style'
 import 'vant/es/row/style'
-import 'vant/es/col/style'
 import 'vant/es/icon/style'
 import 'vant/es/image/style'
 import 'vant/es/button/style'
@@ -80,145 +56,43 @@ import 'vant/es/cell-group/style'
 import 'vant/es/submit-bar/style'
 import Nav from '../components/Nav.vue';
 
-
 export default {
     components: {
         Nav,
     },
     setup() {
         const value = ref('');
-        const active = ref(0);
-        const activeId = ref([1, 2]);
-        const activeIndex = ref(0);
-
-        const items = [
-            {
-                text: '浙江',
-                children: [
-                    { text: '杭州', id: 1 },
-                    { text: '温州', id: 2 },
-                    { text: '宁波', id: 3, disabled: true },
-                ],
-            },
-            {
-                text: '江苏',
-                children: [
-                    { text: '南京', id: 4 },
-                    { text: '无锡', id: 5 },
-                    { text: '徐州', id: 6 },
-                ],
-            },
-            { text: '福建', disabled: true },
-        ];
-        const list = [...Array(50).keys()];
-        const icon = {
-            active: 'https://fastly.jsdelivr.net/npm/@vant/assets/user-active.png',
-            inactive:
-                'https://fastly.jsdelivr.net/npm/@vant/assets/user-inactive.png',
-        };
-
-        const onChange = (index) => {
-            router.push(`/order/${index}`);
-            console.log(index);
-        };
+        const checked = ref(false);
 
         return {
-            items,
-            activeId,
-            activeIndex,
-            icon,
-            active,
             value,
-            onChange,
-            list,
-
+            checked,
         };
     },
     data() {
         return {
-            checked: false,
-            goodsList: [
-                {
-                    num: 1,
-                    price: 26.0,
-                    desc: '菜品介绍，比如原材料、所含营养元素等',
-                    title: '菜品名称',
-                    thumb: 'https://th.bing.com/th/id/OIP.i9rQlQrw_OR30kYM2SGBNQHaFj?pid=ImgDet&rs=1',
-                    tags: ['新品', '火爆'],
-                    buttons: ['添加', '移除'],
-                },
-                // 其他商品数据
-                {
-                    num: 1,
-                    price: 26.0,
-                    desc: '菜品介绍，比如原材料、所含营养元素等',
-                    title: '菜品名称',
-                    thumb: 'https://th.bing.com/th/id/OIP.i9rQlQrw_OR30kYM2SGBNQHaFj?pid=ImgDet&rs=1',
-                    tags: ['新品', '火爆'],
-                    buttons: ['添加', '移除'],
-                },
-                {
-                    num: 1,
-                    price: 26.0,
-                    desc: '菜品介绍，比如原材料、所含营养元素等',
-                    title: '菜品名称',
-                    thumb: 'https://th.bing.com/th/id/OIP.i9rQlQrw_OR30kYM2SGBNQHaFj?pid=ImgDet&rs=1',
-                    tags: ['新品', '火爆'],
-                    buttons: ['添加', '移除'],
-                },
-                {
-                    num: 1,
-                    price: 26.0,
-                    desc: '菜品介绍，比如原材料、所含营养元素等',
-                    title: '菜品名称',
-                    thumb: 'https://th.bing.com/th/id/OIP.i9rQlQrw_OR30kYM2SGBNQHaFj?pid=ImgDet&rs=1',
-                    tags: ['新品', '火爆'],
-                    buttons: ['添加', '移除'],
-                },
-                {
-                    num: 1,
-                    price: 26.0,
-                    desc: '菜品介绍，比如原材料、所含营养元素等',
-                    title: '菜品名称',
-                    thumb: 'https://th.bing.com/th/id/OIP.i9rQlQrw_OR30kYM2SGBNQHaFj?pid=ImgDet&rs=1',
-                    tags: ['新品', '火爆'],
-                    buttons: ['添加', '移除'],
-                },
-                {
-                    num: 1,
-                    price: 26.0,
-                    desc: '菜品介绍，比如原材料、所含营养元素等',
-                    title: '菜品名称',
-                    thumb: 'https://th.bing.com/th/id/OIP.i9rQlQrw_OR30kYM2SGBNQHaFj?pid=ImgDet&rs=1',
-                    tags: ['新品', '火爆'],
-                    buttons: ['添加', '移除'],
-                },
-                {
-                    num: 1,
-                    price: 26.0,
-                    desc: '菜品介绍，比如原材料、所含营养元素等',
-                    title: '菜品名称',
-                    thumb: 'https://th.bing.com/th/id/OIP.i9rQlQrw_OR30kYM2SGBNQHaFj?pid=ImgDet&rs=1',
-                    tags: ['新品', '火爆'],
-                    buttons: ['添加', '移除'],
-                },
-                {
-                    num: 1,
-                    price: 26.0,
-                    desc: '菜品介绍，比如原材料、所含营养元素等',
-                    title: '菜品名称',
-                    thumb: 'https://th.bing.com/th/id/OIP.i9rQlQrw_OR30kYM2SGBNQHaFj?pid=ImgDet&rs=1',
-                    tags: ['新品', '火爆'],
-                    buttons: ['添加', '移除'],
-                },
-            ],
+            dishes: [],
         };
     },
     methods: {
         onSubmit() {
             Toast('提交订单');
         },
-    }
-
+        getDishes() {
+            const id = 1; // replace with the correct category id
+            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+                if (response.data.code === 1) {
+                    this.dishes = response.data.data;
+                }
+            });
+        },
+        addToCart(dish) {
+            dish.id = dish.dish_id;
+            // TODO: add dish to cart
+        },
+    },
+    mounted() {
+        this.getDishes();
+    },
 };
 </script>

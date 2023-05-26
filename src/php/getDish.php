@@ -13,7 +13,7 @@ $id = $_GET["id"];
 
 // $id = 2;
 
-$sql = "select  d.dish_id,d.dish_name,d.dish_price,d.dish_image,d.dish_des,d.dish_status,d.dish_weight,n.ntt_name from dish d,nutrition n where d.dish_nutrition_id=n.ntt_id and d.dish_category_id=?;";
+$sql = "select d.dish_id, d.dish_name, d.dish_price, d.dish_image, d.dish_des, d.dish_status, d.dish_weight, n.ntt_name from dish d,nutrition n where d.dish_nutrition_id=n.ntt_id and d.dish_category_id=?;";
 // echo $sql;
 $stmt=mysqli_prepare($conn,$sql);
 mysqli_stmt_bind_param($stmt,"i",$id);
