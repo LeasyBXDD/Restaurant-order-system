@@ -34,7 +34,7 @@
         <van-button type="primary" @click="show = true" style="width: 100%;">选择日期</van-button>
         <!-- <van-cell title="选择单个日期" :value="date" @click="show = true" /> -->
         <van-calendar v-model:show="show" @confirm="onConfirm" />
-        
+
         <!-- 明日饮食建议和描述信息 -->
         <div class="infocard">
             <van-cell-group title="明日饮食建议">
@@ -46,8 +46,10 @@
                         <div style="font-size: 14px; color: #999;">{{ item.desc }}</div>
                     </template>
                 </van-card>
-                <span style="font-size: 14px; color: #999; margin-left: 10px; margin-right: 10px; padding: 10px;">*以上建议根据《中国居民膳食指南》得出，</span>
-                <span style="font-size: 14px; color: #999; margin-left: 15px; margin-right: 10px; padding: 10px;">结论仅供参考</span>
+                <span
+                    style="font-size: 14px; color: #999; margin-left: 10px; margin-right: 10px; padding: 10px;">*以上建议根据《中国居民膳食指南》得出，</span>
+                <span
+                    style="font-size: 14px; color: #999; margin-left: 15px; margin-right: 10px; padding: 10px;">结论仅供参考</span>
             </van-cell-group>
         </div>
 
@@ -86,8 +88,11 @@ export default {
         this.generateAdviceList();
     },
     methods: {
+        getSelectedDate() {
+            // 获取选择的日期
+        },
         getTime() {
-            this.time = '2021-05-01 12:00:00';
+            this.time = '2021-01-01'
         },
         getGood() {
             this.good = '营养均衡';
@@ -105,6 +110,9 @@ export default {
     setup() {
         const date = ref('');
         const show = ref(false);
+        // const showDate = ref(false);
+        // const minDate = new Date(2021, 0, 1);
+        // const maxDate = new Date(2021, 11, 31);
 
         const formatDate = (date) => `${date.getMonth() + 1}/${date.getDate()}`;
         const onConfirm = (value) => {
@@ -115,6 +123,9 @@ export default {
         return {
             date,
             show,
+            // showDate,
+            // minDate,
+            // maxDate,
             onConfirm,
         };
     },

@@ -2,22 +2,83 @@
     <van-back-top bottom="150px" />
 
     <van-search v-model="value" placeholder="请输入搜索关键词" />
-    <van-notice-bar left-icon="volume-o" text="今日土豆牛腩汤加量不加价！小众点评打卡本店即可享受小份免费升大份！" />
+    <van-notice-bar left-icon="volume-o" text="小众点评打卡本店即可获赠冰粉一份！仅限本周！" style="margin-bottom: 12px;" />
     <van-row>
-        <div style="width: 100%;">
-            <van-card v-for="(item, index) in dishes" :key="index" :num="item.dish_weight" :price="item.dish_price"
-                :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id">
-                <template #footer>
-                    <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">{{ button
-                    }}</van-button>
-                    <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
-                </template>
-            </van-card>
-        </div>
+        <van-tabs v-model:active="active" @click-tab="onClickTab" type="card" style="width: 100%;">
+            <van-tab title="主食">
+                <div style="width: 100%;">
+                    <van-card v-for="(item, index) in dishes1" :key="index" :num="item.dish_weight" :price="item.dish_price"
+                        :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id">
+                        <template #thumb>
+                            <img :src="item.dish_img" style="width: 100%; height: 100%;" />
+                        </template>
+                        <template #footer>
+                            <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">{{
+                                button
+                            }}</van-button>
+                            <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
+                            <!-- 从购物车中移除 -->
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
+                        </template>
+                    </van-card>
+                </div>
+            </van-tab>
+            <van-tab title="川菜">
+                <div style="width: 100%;">
+                    <van-card v-for="(item, index) in dishes2" :key="index" :num="item.dish_weight" :price="item.dish_price"
+                        :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id">
+                        <template #thumb>
+                            <img :src="item.dish_img" style="width: 100%; height: 100%;" />
+                        </template>
+                        <template #footer>
+                            <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">{{
+                                button
+                            }}</van-button>
+                            <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
+                        </template>
+                    </van-card>
+                </div>
+            </van-tab>
+            <van-tab title="粤菜">
+                <div style="width: 100%;">
+                    <van-card v-for="(item, index) in dishes3" :key="index" :num="item.dish_weight" :price="item.dish_price"
+                        :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id">
+                        <template #thumb>
+                            <img :src="item.dish_img" style="width: 100%; height: 100%;" />
+                        </template>
+                        <template #footer>
+                            <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">{{
+                                button
+                            }}</van-button>
+                            <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
+                        </template>
+                    </van-card>
+                </div>
+            </van-tab>
+            <van-tab title="粤菜">
+                <div style="width: 100%;">
+                    <van-card v-for="(item, index) in dishes4" :key="index" :num="item.dish_weight" :price="item.dish_price"
+                        :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id">
+                        <template #thumb>
+                            <img :src="item.dish_img" style="width: 100%; height: 100%;" />
+                        </template>
+                        <template #footer>
+                            <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">{{
+                                button
+                            }}</van-button>
+                            <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
+                        </template>
+                    </van-card>
+                </div>
+            </van-tab>
+        </van-tabs>
     </van-row>
-    <van-submit-bar :price="3050" button-text="提交订单" @submit="onSubmit" style="margin-bottom: 50px;">
-        <van-checkbox v-model="checked">全选</van-checkbox>
-    </van-submit-bar>
+
+    <van-submit-bar :price="parseFloat(cartTotalPrice * 100)" button-text="提交订单" @submit="onSubmit"
+        style="margin-bottom: 49px;" />
 
     <Nav></Nav>
 </template>
@@ -54,6 +115,9 @@ import 'vant/es/back-top/style'
 import 'vant/es/cell/style'
 import 'vant/es/cell-group/style'
 import 'vant/es/submit-bar/style'
+import 'vant/es/nav-bar/style'
+import 'vant/es/tabs/style'
+import 'vant/es/tab/style'
 import Nav from '../components/Nav.vue';
 
 export default {
@@ -63,36 +127,110 @@ export default {
     setup() {
         const value = ref('');
         const checked = ref(false);
+        const active = ref(0);
+        const onClickTab = ({ title }) => showToast(title);
 
         return {
             value,
             checked,
+            active,
+            onClickTab,
         };
     },
     data() {
         return {
-            dishes: [],
+            cart: [], // define cart as an empty array
+            cartTotalPrice: 0,
+            cartTotalQuantity: 0,
+            dishes1: [],
+            dishes2: [],
+            dishes3: [],
+            dishes4: [],
         };
     },
     methods: {
         onSubmit() {
-            Toast('提交订单');
+            // check if cart is empty
+            if (this.cart.length === 0) {
+                Toast('购物车为空');
+                return;
+            }
+
+            // submit cart content to server
+            // ...
+
+            // clear cart
+            this.cart = [];
+            this.cartTotalPrice = 0;
+            this.cartTotalQuantity = 0;
+
+            // show success message
+            Toast('订单提交成功');
         },
-        getDishes() {
+        getDishes1() {
             const id = 1; // replace with the correct category id
             axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
-                if (response.data.code === 1) {
-                    this.dishes = response.data.data;
+                if (response.data[0].code === 1) {
+                    this.dishes1 = response.data[0].data;
+                }
+            });
+        },
+        getDishes2() {
+            const id = 2; // replace with the correct category id
+            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+                if (response.data[0].code === 1) {
+                    this.dishes2 = response.data[0].data;
+                }
+            });
+        },
+        getDishes3() {
+            const id = 3; // replace with the correct category id
+            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+                if (response.data[0].code === 1) {
+                    this.dishes3 = response.data[0].data;
+                }
+            });
+        },
+        getDishes4() {
+            const id = 4; // replace with the correct category id
+            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+                if (response.data[0].code === 1) {
+                    this.dishes4 = response.data[0].data;
                 }
             });
         },
         addToCart(dish) {
-            dish.id = dish.dish_id;
-            // TODO: add dish to cart
-        },
+            // convert dish price to number
+            dish.price = parseFloat(dish.price);
+
+            // add dish to cart
+            this.cart.push(dish);
+            this.cartTotalPrice += dish_price;
+            this.cartTotalQuantity++;
+
+            // save cart data to local storage
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+            localStorage.setItem('cartTotalPrice', this.cartTotalPrice);
+            localStorage.setItem('cartTotalQuantity', this.cartTotalQuantity);
+            
+            // 给数据库中的dish表中的dish_weight字段加1
+            axios.get(`http://localhost/resphp/getDish.php?id=${dish.dish_id}`).then(response => {
+                if (response.data[0].code === 1) {
+                    // 给数据库中的dish表中的dish_weight字段加1
+                    dish.dish_weight += 1;
+                    console.log('add dish weight successfully');
+                }
+            });
+
+            // show success message
+            Toast('添加成功');
+        }
     },
     mounted() {
-        this.getDishes();
+        this.getDishes1();
+        this.getDishes2();
+        this.getDishes3();
+        this.getDishes4();
     },
 };
 </script>
