@@ -3,7 +3,7 @@
 
     <van-search v-model="value" placeholder="请输入搜索关键词" />
     <van-notice-bar left-icon="volume-o" text="小众点评打卡本店即可获赠冰粉一份！仅限本周！" style="margin-bottom: 12px;" />
-    
+
     <van-row>
         <van-tabs v-model:active="active" @click-tab="onClickTab" type="card" style="width: 100%;">
             <van-tab title="主食">
@@ -13,10 +13,10 @@
                         <template #thumb>
                             <img :src="item.dish_img" style="width: 100%; height: 100%;" />
                         </template>
+                        <template #tags>
+                            <van-tag plain type="primary">{{ item.dish_nutrition_id }}</van-tag>
+                        </template>
                         <template #footer>
-                            <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">{{
-                                button
-                            }}</van-button>
                             <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
                             <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
                         </template>
@@ -31,9 +31,6 @@
                             <img :src="item.dish_img" style="width: 100%; height: 100%;" />
                         </template>
                         <template #footer>
-                            <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">{{
-                                button
-                            }}</van-button>
                             <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
                             <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
                         </template>
@@ -48,16 +45,13 @@
                             <img :src="item.dish_img" style="width: 100%; height: 100%;" />
                         </template>
                         <template #footer>
-                            <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">{{
-                                button
-                            }}</van-button>
                             <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
                             <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
                         </template>
                     </van-card>
                 </div>
             </van-tab>
-            <van-tab title="粤菜">
+            <van-tab title="饮品">
                 <div style="width: 100%;">
                     <van-card v-for="(item, index) in dishes4" :key="index" :num="item.dish_weight" :price="item.dish_price"
                         :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id">
@@ -65,9 +59,6 @@
                             <img :src="item.dish_img" style="width: 100%; height: 100%;" />
                         </template>
                         <template #footer>
-                            <van-button v-for="(button, buttonIndex) in item.buttons" :key="buttonIndex" size="mini">{{
-                                button
-                            }}</van-button>
                             <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
                             <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
                         </template>
@@ -86,6 +77,7 @@
 <script>
 import axios from 'axios';
 import { ref } from 'vue';
+import { showToast } from 'vant';
 import Nav from '../components/Nav.vue'
 import 'vant/es/pull-refresh/style'
 import 'vant/es/tabbar/style'
@@ -151,32 +143,11 @@ export default {
             user_id: 1,
             name: '',
             img: '',
-            dish_flavor: '',
+            dish_flavor: 'default',
             amount: 0,
         };
     },
     methods: {
-        onSubmit() {
-            // check if cart is empty
-            if (this.cart.length === 0) {
-                console.log('cart is empty');
-                return;
-            }
-
-            // send GET request
-            axios.get(`src/php/addShopping.php?dish_id=${this.dish_id}&user_id=${this.user_id}&name=${this.name}&img=${this.img}&dish_flavor=${this.dish_flavor}&amount=${this.amount}`)
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-
-            // clear cart
-            this.cart = [];
-            this.cartTotalPrice = 0;
-            this.cartTotalQuantity = 0;
-        },
         getDishes1() {
             const id = 1; // replace with the correct category id
             axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
@@ -213,10 +184,21 @@ export default {
             // convert dish price to number
             dish.dish_price = parseFloat(dish.dish_price);
 
+            console.log(dish.dish_id, dish.dish_name, dish.dish_price, dish.dish_img, dish.dish_flavor, dish.amount);
             // add dish to cart
             this.cart.push(dish);
             this.cartTotalPrice += dish.dish_price;
             this.cartTotalQuantity++;
+
+            // add dish to cart
+            // this.cart.push({
+            //     dish_id: dish.dish_id,
+            //     user_id: this.user_id,
+            //     name: dish.name,
+            //     img: this.img,
+            //     dish_flavor: this.dish_flavor,
+            //     amount: this.amount,
+            // });
 
             // save cart data to local storage
             localStorage.setItem('cart', JSON.stringify(this.cart));
@@ -231,7 +213,45 @@ export default {
                     console.log('add dish weight successfully');
                 }
             });
-        }
+
+            // send GET request
+            axios.get(`http://localhost/resphp/addShopping.php`
+                , {
+                    params: {
+                        dish_id: this.cart[0].dish_id,
+                        user_id: this.user_id,
+                        name: this.cart[0].dish_name,
+                        img: this.cart[0].dish_img,
+                        dish_flavor: "888",
+                        amount: "999",
+                    },
+                })
+                .then(response => {
+                    // console.log(response.data);
+                    console.log('add shopping successfully');
+                    showToast('添加成功');
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+        },
+        onSubmit() {
+            // check if cart is empty, if yes, show alert and return, if no, route to State page
+            if (this.cart.length === 0) {
+                console.log('cart is empty');
+                showToast('购物车为空');
+                return;
+            } else {
+
+                // clear cart
+                this.cart = [];
+                this.cartTotalPrice = 0;
+                this.cartTotalQuantity = 0;
+
+                this.$router.push('/state');
+            }
+        },
     },
     mounted() {
         this.getDishes1();

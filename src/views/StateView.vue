@@ -1,15 +1,16 @@
 <template>
+    
     <van-space :size="20" direction="vertical">
         <!-- 通知栏 -->
-        <van-notice-bar left-icon="volume-o" text="今日土豆牛腩汤加量不加价！小众点评打卡本店即可享受小份免费升大份！" />
+        <van-notice-bar left-icon="volume-o" text="后厨全程监控，扫描桌上二维码即可观看后厨详细情况，20+“4K超高清摄像头”24小时直播！" />
         <!-- 订单信息 -->
-        <h3 style="font-weight:bolder">下单成功！
+        <h3 style="font-weight:bolder">感谢您的耐心等待！
             <span style="font-size: small; font-weight: bold;">
-                <br>后厨正在拼命备餐o(≧口≦)o
+                <br>后厨正在拼命备餐 o(≧口≦)o
             </span>
         </h3>
         <van-card :num="123456789" :price="1234.56" desc="每天都要好好吃饭哦" :title="`${orderDay} ${orderTime} 的订单`"
-            thumb="/assets/images/order-thumb.png" />
+            thumb="https://www.logo9.net/userfiles/images/288z4.jpg" />
         <h4 style="text-align: center;">预计还要：{{ remainingTime }} 分钟</h4>
         <!-- 进度条 -->
         <van-steps :active="active" click-step>

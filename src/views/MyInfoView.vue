@@ -1,4 +1,14 @@
 <template>
+    <van-notice-bar left-icon="volume-o" color="#1989fa" background="#ecf9ff" style="margin-bottom: 12px;"
+        :scrollable="false">
+        <van-swipe vertical class="notice-swipe" :autoplay="3000" :touchable="false" :show-indicators="false">
+            <van-swipe-item>膳食宝塔牛逼</van-swipe-item>
+            <van-swipe-item>膳食宝塔真牛逼</van-swipe-item>
+            <van-swipe-item>膳食宝塔真真牛逼</van-swipe-item>
+            <van-swipe-item>膳食宝塔真真真牛逼</van-swipe-item>
+        </van-swipe>
+    </van-notice-bar>
+
     <van-space :size="18" direction="vertical" style="padding: 5px;">
         <!-- 左边是名字，右边是头像 -->
         <div class="my-info">
@@ -178,4 +188,9 @@ export default {
     height: 60px;
     border-radius: 50%;
 }
+
+.notice-swipe {
+    height: 40px;
+    line-height: 40px;
+  }
 </style>
