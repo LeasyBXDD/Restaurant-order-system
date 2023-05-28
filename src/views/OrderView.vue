@@ -3,6 +3,7 @@
 
     <van-search v-model="value" placeholder="请输入搜索关键词" />
     <van-notice-bar left-icon="volume-o" text="小众点评打卡本店即可获赠冰粉一份！仅限本周！" style="margin-bottom: 12px;" />
+    
     <van-row>
         <van-tabs v-model:active="active" @click-tab="onClickTab" type="card" style="width: 100%;">
             <van-tab title="主食">
@@ -17,7 +18,6 @@
                                 button
                             }}</van-button>
                             <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
-                            <!-- 从购物车中移除 -->
                             <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
                         </template>
                     </van-card>
@@ -86,6 +86,7 @@
 <script>
 import axios from 'axios';
 import { ref } from 'vue';
+import Nav from '../components/Nav.vue'
 import 'vant/es/pull-refresh/style'
 import 'vant/es/tabbar/style'
 import 'vant/es/tabbar-item/style'
@@ -99,7 +100,6 @@ import 'vant/es/search/style'
 import 'vant/es/notice-bar/style'
 import 'vant/es/sidebar/style'
 import 'vant/es/sidebar-item/style'
-import 'vant/es/toast/style'
 import 'vant/es/action-bar/style'
 import 'vant/es/action-bar-icon/style'
 import 'vant/es/action-bar-button/style'
@@ -118,7 +118,6 @@ import 'vant/es/submit-bar/style'
 import 'vant/es/nav-bar/style'
 import 'vant/es/tabs/style'
 import 'vant/es/tab/style'
-import Nav from '../components/Nav.vue';
 
 export default {
     components: {
@@ -128,7 +127,9 @@ export default {
         const value = ref('');
         const checked = ref(false);
         const active = ref(0);
-        const onClickTab = ({ title }) => showToast(title);
+        const onClickTab = ({ title }) => {
+            console.log("选中", title);
+        };
 
         return {
             value,
@@ -146,26 +147,35 @@ export default {
             dishes2: [],
             dishes3: [],
             dishes4: [],
+            dish_id: 0,
+            user_id: 1,
+            name: '',
+            img: '',
+            dish_flavor: '',
+            amount: 0,
         };
     },
     methods: {
         onSubmit() {
             // check if cart is empty
             if (this.cart.length === 0) {
-                Toast('购物车为空');
+                console.log('cart is empty');
                 return;
             }
 
-            // submit cart content to server
-            // ...
+            // send GET request
+            axios.get(`src/php/addShopping.php?dish_id=${this.dish_id}&user_id=${this.user_id}&name=${this.name}&img=${this.img}&dish_flavor=${this.dish_flavor}&amount=${this.amount}`)
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
 
             // clear cart
             this.cart = [];
             this.cartTotalPrice = 0;
             this.cartTotalQuantity = 0;
-
-            // show success message
-            Toast('订单提交成功');
         },
         getDishes1() {
             const id = 1; // replace with the correct category id
@@ -201,18 +211,18 @@ export default {
         },
         addToCart(dish) {
             // convert dish price to number
-            dish.price = parseFloat(dish.price);
+            dish.dish_price = parseFloat(dish.dish_price);
 
             // add dish to cart
             this.cart.push(dish);
-            this.cartTotalPrice += dish_price;
+            this.cartTotalPrice += dish.dish_price;
             this.cartTotalQuantity++;
 
             // save cart data to local storage
             localStorage.setItem('cart', JSON.stringify(this.cart));
             localStorage.setItem('cartTotalPrice', this.cartTotalPrice);
             localStorage.setItem('cartTotalQuantity', this.cartTotalQuantity);
-            
+
             // 给数据库中的dish表中的dish_weight字段加1
             axios.get(`http://localhost/resphp/getDish.php?id=${dish.dish_id}`).then(response => {
                 if (response.data[0].code === 1) {
@@ -221,9 +231,6 @@ export default {
                     console.log('add dish weight successfully');
                 }
             });
-
-            // show success message
-            Toast('添加成功');
         }
     },
     mounted() {

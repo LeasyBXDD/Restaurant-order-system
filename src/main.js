@@ -105,5 +105,3 @@ app.use(Calendar);
 app.use(router);
 
 app.mount('#app')
-
-
