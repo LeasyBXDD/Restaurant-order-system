@@ -1,15 +1,30 @@
 <template>
     <van-space :size="20" direction="vertical">
         <!-- 通知栏 -->
-        <van-notice-bar left-icon="volume-o" text="后厨全程监控，扫描桌上二维码即可观看后厨详细情况，20+“4K超高清摄像头”24小时直播！" />
+        <van-notice-bar left-icon="volume-o" text="后厨全程监控，扫描桌上二维码即可观看后厨详细情况，20个“陆病弱闻4K超高清摄像头”24小时直播！" />
         <!-- 订单信息 -->
-        <h3 style="font-weight:bolder">感谢您的耐心等待！
-            <span style="font-size: small; font-weight: bold;">
-                <br>后厨正在拼命备餐 o(≧口≦)o
-            </span>
-        </h3>
-        <van-card :num="123456789" :price="1234.56" desc="每天都要好好吃饭哦" :title="`${orderDay} ${orderTime} 的订单`"
-            thumb="https://www.logo9.net/userfiles/images/288z4.jpg" />
+        <van-row>
+            <van-col span="18">
+                <span style="text-align: center;">
+                <h3 style="font-weight:bolder">感谢您的耐心等待！
+                    <span style="font-size: small; font-weight: bold;">
+                        <br>后厨正在拼命备餐 o(≧口≦)o
+                    </span>
+                </h3>                    
+                </span>
+
+            </van-col>
+            <van-col span="6">
+                <span>
+                    <van-button size="small" type="primary" text="刷新页面" @click="updatePrice" style="margin: 10px 0;" />
+                </span>
+            </van-col>
+        </van-row>
+
+        <van-card :price="price" desc="每天都要好好吃饭哦" :title="`${orderDay} ${orderTime} 的订单`"
+            thumb="https://www.logo9.net/userfiles/images/288z4.jpg">
+            <!-- 刷新状态按钮 -->
+        </van-card>
         <h4 style="text-align: center;">预计还要：{{ remainingTime }} 分钟</h4>
         <!-- 进度条 -->
         <van-steps :active="active" click-step>
@@ -37,7 +52,7 @@ import 'vant/es/steps/style'
 import 'vant/es/step/style'
 import 'vant/es/notice-bar/style'
 import 'vant/es/card/style'
-
+import 'vant/es/button/style'
 
 
 export default {
@@ -54,6 +69,7 @@ export default {
             orderTime: '',
             remainingTime: '',
             dishes: [],
+            price: 0,
         };
     },
     mounted() {
@@ -66,6 +82,10 @@ export default {
         this.getDishes();
     },
     methods: {
+        updatePrice() {
+            // 在需要的时候更新 price 的值
+            this.price = 20;
+        },
         getOrderDay() {
             // 发送请求获取订单日期信息的逻辑
             // 在请求成功后将订单日期信息赋值给 orderDay 属性

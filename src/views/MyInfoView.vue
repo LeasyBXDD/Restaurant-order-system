@@ -35,15 +35,12 @@
             <div style="max-height: 400px;">
                 <EchartsOne></EchartsOne>
             </div>
-            <!-- 居中的iframe -->
-            <!-- <iframe src="http://127.0.0.1:5500/index.html" frameborder="0"
-                style="width: 100%; height: 300px; padding: 10px;"></iframe> -->
         </div>
 
         <!-- 日期选择按钮 -->
         <van-button type="primary" @click="show = true" style="width: 100%;">选择日期</van-button>
         <!-- <van-cell title="选择单个日期" :value="date" @click="show = true" /> -->
-        <van-calendar v-model:show="show" @confirm="onConfirm" ref="calendar"/>
+        <van-calendar v-model:show="show" ref="calendar" @confirm="onConfirm" />
 
         <!-- 明日饮食建议和描述信息 -->
         <div class="infocard">
@@ -68,6 +65,7 @@
 </template>
     
 <script>
+import axios from 'axios';
 import { ref } from 'vue';
 import { timePickerProps } from 'vant';
 import EchartsOne from '../components/EchartsOne.vue';
@@ -96,13 +94,6 @@ export default {
         this.getGood();
         // 发送请求获取饮食建议
         this.generateAdviceList();
-        // 获取选择的日期
-        this.$refs.calendar.getSelectedDate(
-            // 输出选择的日期
-            (date) => {
-                console.log(date);
-            }
-        );
     },
     methods: {
         getTime() {
@@ -119,27 +110,43 @@ export default {
             this.adviceList.push({ title: '早餐', desc: breakfast.join('、') });
             this.adviceList.push({ title: '午餐', desc: lunch.join('、') });
             this.adviceList.push({ title: '晚餐', desc: dinner.join('、') });
-        }
+        },
+
     },
     setup() {
         const date = ref('');
         const show = ref(false);
-        // const showDate = ref(false);
-        // const minDate = new Date(2021, 0, 1);
-        // const maxDate = new Date(2021, 11, 31);
 
         const formatDate = (date) => `${date.getMonth() + 1}/${date.getDate()}`;
         const onConfirm = (value) => {
+
             show.value = false;
             date.value = formatDate(value);
+
+            // 输出选择的日期
+            console.log(date.value);
+
+            // 发送选择的日期到后端
+            axios.get('http://localhost/resphp/getNtt.php', {
+                params: {
+                    user_id: 1,
+                    year: value.getFullYear().toString(),
+                    month: (value.getMonth() + 1).toString(),
+                    day: value.getDate().toString(),
+                },
+            }).then((res) => {
+                console.log(res);
+                // 将返回的数据传给EchartsOne组件
+                EchartsOne.props.data = res.data;
+                
+            }).catch((err) => {
+                console.log(err);
+            });
         };
 
         return {
             date,
             show,
-            // showDate,
-            // minDate,
-            // maxDate,
             onConfirm,
         };
     },
@@ -196,5 +203,5 @@ export default {
 .notice-swipe {
     height: 40px;
     line-height: 40px;
-  }
+}
 </style>
