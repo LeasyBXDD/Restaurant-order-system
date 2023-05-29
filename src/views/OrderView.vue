@@ -9,12 +9,14 @@
             <van-tab title="主食">
                 <div style="width: 100%;">
                     <van-card v-for="(item, index) in dishes1" :key="index" :num="item.dish_weight" :price="item.dish_price"
-                        :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id">
+                        :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id" :tags="item.dish_nutrition_id">
                         <template #thumb>
                             <img :src="item.dish_img" style="width: 100%; height: 100%;" />
                         </template>
                         <template #tags>
-                            <van-tag plain type="primary">{{ item.dish_nutrition_id }}</van-tag>
+                            <van-tag plain type="primary">超新鲜</van-tag>
+                            <span style="margin-left: 3px;"></span>
+                            <van-tag plain type="primary">超营养</van-tag>
                         </template>
                         <template #footer>
                             <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>

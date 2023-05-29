@@ -1,5 +1,4 @@
 <template>
-    
     <van-space :size="20" direction="vertical">
         <!-- 通知栏 -->
         <van-notice-bar left-icon="volume-o" text="后厨全程监控，扫描桌上二维码即可观看后厨详细情况，20+“4K超高清摄像头”24小时直播！" />
