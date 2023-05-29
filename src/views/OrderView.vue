@@ -1,7 +1,6 @@
 <template>
     <van-back-top bottom="150px" />
-
-    <van-search v-model="value" placeholder="请输入搜索关键词" />
+    <!-- <van-search v-model="value" placeholder="请输入搜索关键词" /> -->
     <van-notice-bar left-icon="volume-o" text="小众点评打卡本店即可获赠冰粉一份！仅限本周！" style="margin-bottom: 12px;" />
 
     <van-row>
@@ -9,7 +8,8 @@
             <van-tab title="主食">
                 <div style="width: 100%;">
                     <van-card v-for="(item, index) in dishes1" :key="index" :num="item.dish_weight" :price="item.dish_price"
-                        :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id" :tags="item.dish_nutrition_id">
+                        :desc="item.dish_des" :title="item.dish_name" :thumb="item.dish_img" :id="item.dish_id"
+                        :tags="item.dish_nutrition_id">
                         <template #thumb>
                             <img :src="item.dish_img" style="width: 100%; height: 100%;" />
                         </template>
@@ -19,8 +19,8 @@
                             <van-tag plain type="primary">超营养</van-tag>
                         </template>
                         <template #footer>
-                            <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
-                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
+                            <van-button size="mini" type="primary" @click="addToCart(item)" round ><van-icon name="plus" /></van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)" round ><van-icon name="minus" /></van-button>
                         </template>
                     </van-card>
                 </div>
@@ -112,12 +112,22 @@ import 'vant/es/submit-bar/style'
 import 'vant/es/nav-bar/style'
 import 'vant/es/tabs/style'
 import 'vant/es/tab/style'
+import 'vant/es/overlay/style'
+import 'vant/es/popup/style'
+import 'vant/es/icon/style'
 
 export default {
     components: {
         Nav,
     },
     setup() {
+        const show = ref(false);
+        const onClickOverlay = () => {
+            showToast('click-overlay');
+        };
+        const onClickCloseIcon = () => {
+            showToast('click-close-icon');
+        };
         const value = ref('');
         const checked = ref(false);
         const active = ref(0);
@@ -126,6 +136,9 @@ export default {
         };
 
         return {
+            show,
+            onClickOverlay,
+            onClickCloseIcon,
             value,
             checked,
             active,

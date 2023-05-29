@@ -13,8 +13,8 @@
         <!-- 左边是名字，右边是头像 -->
         <div class="my-info">
             <div class="my-info-left">
-                <div class="my-info-name">张三</div>
-                <div class="my-info-id">ID: 123456</div>
+                <div class="my-info-name">user001</div>
+                <div class="my-info-id">13958958107</div>
             </div>
             <div class="my-info-right">
                 <img src="https://img.yzcdn.cn/vant/cat.jpeg" alt="" />
@@ -43,7 +43,7 @@
         <!-- 日期选择按钮 -->
         <van-button type="primary" @click="show = true" style="width: 100%;">选择日期</van-button>
         <!-- <van-cell title="选择单个日期" :value="date" @click="show = true" /> -->
-        <van-calendar v-model:show="show" @confirm="onConfirm" />
+        <van-calendar v-model:show="show" @confirm="onConfirm" ref="calendar"/>
 
         <!-- 明日饮食建议和描述信息 -->
         <div class="infocard">
@@ -96,11 +96,14 @@ export default {
         this.getGood();
         // 发送请求获取饮食建议
         this.generateAdviceList();
+        // 获取选择的日期
+        this.$refs.calendar.getSelectedDate(
+            (date) => {
+                console.log(date);
+            }
+        );
     },
     methods: {
-        getSelectedDate() {
-            // 获取选择的日期
-        },
         getTime() {
             this.time = '2021-01-01'
         },

@@ -44,6 +44,7 @@ import { BackTop } from 'vant';
 import { Cell } from 'vant';
 import { Step, Steps } from 'vant';
 import { Calendar } from 'vant';
+import { Icon } from 'vant';
 import '@vant/touch-emulator';
 
 const app = createApp(App)
@@ -101,6 +102,7 @@ app.use(Cell);
 app.use(Step);
 app.use(Steps);
 app.use(Calendar);
+app.use(Icon);
 
 app.use(router);
 
