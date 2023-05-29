@@ -98,6 +98,7 @@ export default {
         this.generateAdviceList();
         // 获取选择的日期
         this.$refs.calendar.getSelectedDate(
+            // 输出选择的日期
             (date) => {
                 console.log(date);
             }
