@@ -1,12 +1,9 @@
-CREATE database db_go;
-USE db_go;
-
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost:8889
--- 生成日期： 2023-05-29 08:42:04
+-- 生成日期： 2023-05-30 07:08:00
 -- 服务器版本： 5.7.39
 -- PHP 版本： 7.4.33
 
@@ -90,7 +87,21 @@ INSERT INTO `dish` (`dish_id`, `dish_name`, `dish_category_id`, `dish_price`, `d
 (2, '盐卤豆花水煮鱼', 2, '65.00', 'https://hellorfimg.zcool.cn/provider_image/large/hi2240046414.jpg', '川菜经典，豆花柔嫩，鱼片鲜嫩，爽口微辣，香气十足。', 1, 36, 2),
 (3, '米饭', 1, '3.00', 'https://img2.baidu.com/it/u=108457981,2972760881&fm=253&fmt=auto&app=138&f=JPEG?w=610&h=406', '主食之王，软糯香甜。', 1, 52, 3),
 (4, '板烧鸡腿堡', 3, '23.00', 'https://img2.baidu.com/it/u=2196094063,2946524437&fm=253&fmt=auto&app=120&f=PNG?w=667&h=500', '原块去骨鸡排嫩滑多汁，与翠绿新鲜的生菜加洋葱，口感丰富，让人食指大动。', 1, 16, 1),
-(5, '加多宝', 4, '8.00', 'https://img1.baidu.com/it/u=3570795302,2814812705&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', '天然草本，清热解渴好选择。', 1, 26, 3);
+(5, '加多宝', 4, '8.00', 'https://img1.baidu.com/it/u=3570795302,2814812705&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', '天然草本，清热解渴好选择。', 1, 26, 3),
+(6, '十八秒嫩牛肉', 2, '36.00', 'https://p3.ssl.qhimgs3.com/t01e53a6ea74900e63d.jpg', '十八秒炒制，口感鲜嫩，肉质醇香。', 1, 50, 2),
+(7, '水煮肉片', 2, '32.00', 'https://photo.tuchong.com/15841554/f/630644911.jpg', '传统川菜，肉片鲜嫩，辣椒麻辣，汤汁鲜香。', 1, 30, 2),
+(8, '宫保鸡丁', 2, '25.00', 'https://pic.rmb.bdstatic.com/bccbc04f2aebb3a23696a16073087de8.jpeg', '鸡肉鲜嫩，甜辣可口。', 1, 35, 2),
+(9, '巴蜀豆花肥肠', 2, '59.00', 'https://i3.meishichina.com/attachment/recipe/2017/11/21/20171121151125205239813.jpg?x-oss-process=style/c320', '豆花细嫩，肥肠入味，麻辣鲜香，爽口回味。', 1, 18, 2),
+(10, '石锅娃娃菜', 2, '32.00', 'https://img2.baidu.com/it/u=83140036,2617766385&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=275', '石锅保温使得娃娃菜保持了脆嫩的口感，同时吸收了各种配料的香味，味道鲜美，营养丰富。', 1, 6, 4),
+(11, '酸辣土豆丝', 2, '16.00', 'https://materials.cdn.bcebos.com/images/128528313/22d36d5061c45a4e538121ef0d451005.jpg', '酸辣可口，色彩艳丽，爽口开胃。', 1, 3, 4),
+(12, '干锅花菜', 2, '23.00', 'https://bkimg.cdn.bcebos.com/pic/f703738da9773912b31b99bf3e539118367adbb44490', '颜色鲜艳，香辣味浓，营养丰富。', 1, 4, 4),
+(13, '蒜蓉炒菠菜', 2, '22.00', 'https://bkimg.cdn.bcebos.com/pic/b3fb43166d224f4a69cba47d07f790529822d10a', '味道鲜美，营养丰富。', 1, 5, 4),
+(14, '酱油鸡蛋炒饭', 1, '19.00', 'https://i2.chuimg.com/9a3c231e495f40808dc4cce76dba92d4_959w_1196h.jpg?imageView2/2/w/600/interlace/1/q/90', '鸡蛋嫩滑，酱油醇香，包裹着每一粒米饭，香气扑鼻。', 1, 35, 3),
+(15, '青菜炒河粉', 1, '15.00', 'https://cp1.douguo.com/upload/note/e/5/6/750_e5cc51adde6baf98dbecbe0cfaffbe66.jpeg', '河粉柔软和口感，青菜清新和脆嫩，相互搭配，营养丰富。', 1, 32, 3),
+(16, '肉丝炒面', 1, '23.00', 'https://img.mp.itc.cn/upload/20170405/0cb4f320c35b417ab5ae8a4554949e01_th.jpeg', '肉质爽滑，入口即化，面条口感劲道，富有嚼劲，口感丰富。', 1, 35, 3),
+(17, '鸡蛋炒粉干', 1, '16.00', 'https://bpic.51yuansu.com/pic3/cover/03/51/11/5bbdd85e6e674_610.jpg', '鸡蛋柔嫩，粉干具有嚼劲，口感丰富。', 1, 35, 3),
+(18, '辣炒年糕', 1, '26.00', 'http://t13.baidu.com/it/u=3406576521,2806375299&fm=224&app=112&f=JPEG?w=500&h=500', '年糕口感Q弹嫩滑，辣度适中，味道香辣鲜美，回味无穷。', 1, 50, 3),
+(19, '素炒米粉', 1, '21.00', 'https://img0.baidu.com/it/u=2807605590,3528845005&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500', '米粉口感细腻软糯，微带米香，加入蔬菜和调料，鲜香可口，营养丰富。', 1, 30, 3);
 
 -- --------------------------------------------------------
 
@@ -218,7 +229,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_name`, `user_phone`, `user_sex`, `user_avatar`, `user_pwd`, `user_age`) VALUES
-(1, '傅贤杨', '13958958107', '男', '', 'e10adc3949ba59abbe56e057f20f883e', 21);
+(1, '傅贤杨', '13958958107', '男', '', 'e10adc3949ba59abbe56e057f20f883e', 21),
+(2, '郭馨蔓', '18142022560', '女', NULL, '123456', 18),
+(3, '张三', '15117845150', '男', NULL, '123456789', 18),
+(4, '李四', '19885540580', '男', NULL, 'qwe123', 32);
 
 --
 -- 转储表的索引
@@ -295,7 +309,7 @@ ALTER TABLE `category`
 -- 使用表AUTO_INCREMENT `dish`
 --
 ALTER TABLE `dish`
-  MODIFY `dish_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键', AUTO_INCREMENT=6;
+  MODIFY `dish_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键', AUTO_INCREMENT=20;
 
 --
 -- 使用表AUTO_INCREMENT `dish_flavor`
@@ -307,7 +321,7 @@ ALTER TABLE `dish_flavor`
 -- 使用表AUTO_INCREMENT `nutrition`
 --
 ALTER TABLE `nutrition`
-  MODIFY `ntt_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键', AUTO_INCREMENT=6;
+  MODIFY `ntt_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键', AUTO_INCREMENT=5;
 
 --
 -- 使用表AUTO_INCREMENT `orders`
@@ -331,7 +345,7 @@ ALTER TABLE `shopping_cart`
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键', AUTO_INCREMENT=2;
+  MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键', AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
