@@ -5,18 +5,18 @@
         <!-- 订单信息 -->
         <van-row>
             <van-col span="18">
-                <span style="text-align: center;">
-                <h3 style="font-weight:bolder">感谢您的耐心等待！
-                    <span style="font-size: small; font-weight: bold;">
-                        <br>后厨正在拼命备餐 o(≧口≦)o
-                    </span>
-                </h3>                    
+                <span style="text-align: left;">
+                    <h3 style="font-weight:bolder">感谢您的耐心等待！
+                        <span style="font-size: small; font-weight: bold;">
+                            <br>后厨正在拼命备餐 o(≧口≦)o
+                        </span>
+                    </h3>
                 </span>
 
             </van-col>
             <van-col span="6">
                 <span>
-                    <van-button size="small" type="primary" text="刷新页面" @click="updatePrice" style="margin: 10px 0;" />
+                    <van-button size="small" type="primary" text="测试出餐" @click="updateActive" style="margin: 10px 0;" />
                 </span>
             </van-col>
         </van-row>
@@ -47,6 +47,7 @@
 
 <script>
 import { ref } from 'vue';
+import axios from 'axios';
 import Nav from '../components/Nav.vue';
 import 'vant/es/steps/style'
 import 'vant/es/step/style'
@@ -60,8 +61,8 @@ export default {
         Nav,
     },
     setup() {
-        const active = ref(1);
-        return { active };
+        // const active = ref(1);
+        // return { active };
     },
     data() {
         return {
@@ -70,6 +71,7 @@ export default {
             remainingTime: '',
             dishes: [],
             price: 0,
+            active: 0,
         };
     },
     mounted() {
@@ -82,9 +84,19 @@ export default {
         this.getDishes();
     },
     methods: {
-        updatePrice() {
-            // 在需要的时候更新 price 的值
-            this.price = 20;
+        updateActive() {
+            // 发送请求获取订单状态信息的逻辑
+            // 在请求成功后将订单状态信息赋值给 active 属性
+            // axios.get('http://localhost:8080/api/order/status').then((res) => {
+            //     this.active = res.data.status;
+            // });
+            // 测试用
+            // 当active小于等于3时，每次点击按钮active加1，否则active重置为0
+            if (this.active < 3) {
+                this.active++;
+            } else {
+                this.active = 0;
+            }
         },
         getOrderDay() {
             // 发送请求获取订单日期信息的逻辑

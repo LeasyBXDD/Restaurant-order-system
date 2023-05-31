@@ -1,6 +1,8 @@
 <template>
     <van-back-top bottom="150px" />
     <!-- <van-search v-model="value" placeholder="请输入搜索关键词" /> -->
+    <van-search v-model="value" @change="changeInputValue" :focus="theFocus" custom-class="inp" placeholder="请输入搜索关键词"
+        show-action @cancel="onCancel()" @search="onSearch()" />
     <van-notice-bar left-icon="volume-o" text="小众点评打卡本店即可获赠冰粉一份！仅限本周！" style="margin-bottom: 12px;" />
 
     <van-row>
@@ -13,14 +15,16 @@
                         <template #thumb>
                             <img :src="item.dish_img" style="width: 100%; height: 100%;" />
                         </template>
-                        <template #tags>
+                        <!-- <template #tags>
                             <van-tag plain type="primary">超新鲜</van-tag>
                             <span style="margin-left: 3px;"></span>
                             <van-tag plain type="primary">超营养</van-tag>
-                        </template>
+                        </template> -->
                         <template #footer>
-                            <van-button size="mini" type="primary" @click="addToCart(item)" round ><van-icon name="plus" /></van-button>
-                            <van-button size="mini" type="danger" @click="removeFromCart(item)" round ><van-icon name="minus" /></van-button>
+                            <van-button size="mini" type="primary" @click="addToCart(item)" round><van-icon
+                                    name="plus" /></van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)" round><van-icon
+                                    name="minus" /></van-button>
                         </template>
                     </van-card>
                 </div>
@@ -160,6 +164,7 @@ export default {
             img: '',
             dish_flavor: 'default',
             amount: 0,
+            theFocus: false,
         };
     },
     methods: {
@@ -266,6 +271,49 @@ export default {
 
                 this.$router.push('/state');
             }
+        },
+        toSearch() {
+            // 查找页面中value的位置
+            let index = 0;
+            for (let i = 0; i < this.listdata.length; i++) {
+                if (this.listdata[i].name === this.value) {
+                    index = i;
+                    break;
+                }
+            }
+            if (this.listdata[index] !== undefined) {
+                this.$router.push({ path: '/detail', query: { id: this.listdata[index].id } }); // 跳转到详情页
+            }
+        },
+        saveHistory(value) {
+            // 保存搜索历史
+            let history = localStorage.getItem('history');
+            if (history === null) {
+                history = [];
+            } else {
+                history = JSON.parse(history);
+            }
+            if (history.indexOf(value) === -1) {
+                history.push(value);
+            }
+            localStorage.setItem('history', JSON.stringify(history));
+        },
+        changeInputValue(e) {
+            let value = e.detail;
+            if (value !== undefined && value.length > 0) {
+                this.historyShow = true;
+            }
+            this.value = value;
+            console.log(this.value);
+        },
+        onSearch() {
+            console.log(this.value);
+            // 查找页面中value的位置
+            this.listdata = [];
+            this.toSearch();
+            this.totalPages = 0;
+            this.pageNumber = 1;
+            this.saveHistory(this.value);
         },
     },
     mounted() {

@@ -82,7 +82,7 @@ export default {
     },
     data() {
         return {
-            time: '',
+            time: null,
             good: '',
             adviceList: [],
         };
@@ -97,7 +97,12 @@ export default {
     },
     methods: {
         getTime() {
-            this.time = '2021-01-01'
+            // this.time = '2021-01-01'
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            this.time = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
         },
         getGood() {
             this.good = '营养均衡';
@@ -138,7 +143,7 @@ export default {
                 console.log(res);
                 // 将返回的数据传给EchartsOne组件
                 EchartsOne.props.data = res.data;
-                
+
             }).catch((err) => {
                 console.log(err);
             });
