@@ -116,13 +116,10 @@ export default {
         getDishes() {
             // 发送请求获取餐品信息的逻辑
             // 在请求成功后将餐品信息赋值给 dishes 数组
-            this.dishes = [
-                { name: '鱼香茄子', status: '未出餐' },
-                { name: '番茄炒蛋', status: '未出餐' },
-                { name: '爆炒黄牛肉', status: '未出餐' },
-                { name: '新疆大盘鸡', status: '未出餐' },
-                { name: '清炒时蔬', status: '未出餐' },
-            ];
+            axios.get('http://localhost/resphp/getOrder.php').then((res) => {
+                this.dishes = res.data.dishes;
+                this.price = res.data.price;
+            });
         },
     },
 

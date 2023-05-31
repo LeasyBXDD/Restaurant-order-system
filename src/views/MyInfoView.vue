@@ -2,10 +2,7 @@
     <van-notice-bar left-icon="volume-o" color="#1989fa" background="#ecf9ff" style="margin-bottom: 12px;"
         :scrollable="false">
         <van-swipe vertical class="notice-swipe" :autoplay="3000" :touchable="false" :show-indicators="false">
-            <van-swipe-item>膳食宝塔牛逼</van-swipe-item>
-            <van-swipe-item>膳食宝塔真牛逼</van-swipe-item>
-            <van-swipe-item>膳食宝塔真真牛逼</van-swipe-item>
-            <van-swipe-item>膳食宝塔真真真牛逼</van-swipe-item>
+            <van-swipe-item v-for="(item, index) in noticeList" :key="index">{{ item }}</van-swipe-item>
         </van-swipe>
     </van-notice-bar>
 
@@ -22,7 +19,11 @@
         </div>
 
         <!-- 卡片 -->
-
+        <!-- 日期选择按钮 -->
+        <van-button type="primary" @click="show = true" style="width: 100%; border-radius: 12px; box-shadow: 2px 2px 6px #d9d9d9,
+        -2px -2px 6px #ffffff;">选择日期</van-button>
+        <!-- <van-cell title="选择单个日期" :value="date" @click="show = true" /> -->
+        <van-calendar v-model:show="show" ref="calendar" @confirm="onConfirm" />
 
         <div class="infocard">
             <!-- 时间和标题 -->
@@ -32,15 +33,11 @@
                 <h1>{{ good }}</h1>
             </div>
             <!-- 图表 -->
-            <div style="max-height: 400px;">
+            <div style="max-height: 400px; padding-bottom: 18px;">
                 <EchartsOne></EchartsOne>
             </div>
         </div>
 
-        <!-- 日期选择按钮 -->
-        <van-button type="primary" @click="show = true" style="width: 100%;">选择日期</van-button>
-        <!-- <van-cell title="选择单个日期" :value="date" @click="show = true" /> -->
-        <van-calendar v-model:show="show" ref="calendar" @confirm="onConfirm" />
 
         <!-- 明日饮食建议和描述信息 -->
         <div class="infocard">
@@ -82,6 +79,7 @@ export default {
     },
     data() {
         return {
+            noticeList: [], // 轮播图的内容数组
             time: null,
             good: '',
             adviceList: [],
@@ -94,8 +92,24 @@ export default {
         this.getGood();
         // 发送请求获取饮食建议
         this.generateAdviceList();
+        // 在组件挂载后，动态获取轮播图的内容
+        this.getNoticeList();
     },
     methods: {
+        getNoticeList() {
+            // 发送 HTTP 请求，获取轮播图的内容
+            // ...
+            // 假设请求成功后，将轮播图的内容存储在 this.noticeList 中
+            this.noticeList = [
+                "膳食宝塔是营养平衡指南",
+                "帮助人们选择健康食谱",
+                "以塔形图形象展示食物",
+                "包括11个类别，提供建议摄入量",
+                "倡导多样化饮食结构",
+                "避免单一食物过量",
+                "是中国推广营养健康的标志性项目"
+            ];
+        },
         getTime() {
             // this.time = '2021-01-01'
             const now = new Date();
