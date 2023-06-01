@@ -43,8 +43,12 @@
                             <van-tag type="primary"> 销售量 {{ tags2[index].dish_weight }}</van-tag>
                         </template>
                         <template #footer>
-                            <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
-                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
+                            <van-button size="mini" type="primary" @click="addToCart(item)" round
+                                :style="{ backgroundColor: backgroundColorYes }">来一份</van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)" round
+                                :style="{ backgroundColor: backgroundColorNo }">不要了</van-button>
+                            <!-- <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button> -->
                         </template>
                     </van-card>
                 </div>
@@ -60,8 +64,12 @@
                             <van-tag type="primary"> 销售量 {{ tags3[index].dish_weight }}</van-tag>
                         </template>
                         <template #footer>
-                            <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
-                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
+                            <van-button size="mini" type="primary" @click="addToCart(item)" round
+                                :style="{ backgroundColor: backgroundColorYes }">来一份</van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)" round
+                                :style="{ backgroundColor: backgroundColorNo }">不要了</van-button>
+                            <!-- <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button> -->
                         </template>
                     </van-card>
                 </div>
@@ -77,8 +85,12 @@
                             <van-tag type="primary"> 销售量 {{ tags4[index].dish_weight }}</van-tag>
                         </template>
                         <template #footer>
-                            <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
-                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button>
+                            <van-button size="mini" type="primary" @click="addToCart(item)" round
+                                :style="{ backgroundColor: backgroundColorYes }">来一份</van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)" round
+                                :style="{ backgroundColor: backgroundColorNo }">不要了</van-button>
+                            <!-- <van-button size="mini" type="primary" @click="addToCart(item)">加入购物车</van-button>
+                            <van-button size="mini" type="danger" @click="removeFromCart(item)">移除</van-button> -->
                         </template>
                     </van-card>
                 </div>
@@ -236,13 +248,13 @@ export default {
         },
         getDishes1() {
             const id = 1; // replace with the correct category id
-            const getDishPromise = axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
                 if (response.data[0].code === 1) {
                     this.dishes1 = response.data[0].data;
                 }
             });
 
-            const getShoppingPromise = axios.get(`http://localhost/resphp/getShopping.php?id=${id}`)
+            axios.get(`http://localhost/resphp/getShopping.php?id=${id}`)
                 .then(response => {
                     console.log(response.data);
                     for (let i = 0; i < this.dishes1.length; i++) {
@@ -255,10 +267,10 @@ export default {
                     console.log(error);
                 });
 
-            Promise.all([getDishPromise, getShoppingPromise]).then(() => {
-                // 两个请求都完成后执行的操作
-                console.log('两个请求都完成了');
-            });
+            // Promise.all([getDishPromise, getShoppingPromise]).then(() => {
+            //     // 两个请求都完成后执行的操作
+            //     console.log('两个请求都完成了');
+            // });
         },
         getDishes2() {
             const id = 2; // replace with the correct category id
@@ -494,11 +506,11 @@ export default {
         onSearch() {
             console.log(this.value);
             // 查找页面中value的位置
-            this.listdata = [];
-            this.toSearch();
-            this.totalPages = 0;
-            this.pageNumber = 1;
-            this.saveHistory(this.value);
+            // this.listdata = [];
+            // this.toSearch();
+            // this.totalPages = 0;
+            // this.pageNumber = 1;
+            // this.saveHistory(this.value);
         },
     },
     mounted() {

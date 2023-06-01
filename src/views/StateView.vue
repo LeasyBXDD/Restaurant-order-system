@@ -15,8 +15,9 @@
 
             </van-col>
             <van-col span="6">
-                <span>
-                    <van-button size="small" type="primary" text="测试出餐" @click="updateActive" style="margin: 10px 0;" />
+                <span class="testBtn">
+                    <van-button size="small" type="primary" plain text="测试出餐" @click="updateActive" />
+                    <!-- <van-button size="small" type="primary" plain text="测试出餐" @click="serveDish" /> -->
                 </span>
             </van-col>
         </van-row>
@@ -36,7 +37,11 @@
         <!-- 显示订购餐品的内容并显示是否出餐 -->
         <van-list>
             <h4 style="margin: 10px; font-weight: bolder;">出餐情况</h4>
-            <van-cell v-for="(dish, index) in dishes" :key="index" :title="dish.name" :value="dish.status" />
+            <van-cell v-for="(dish, index) in dishes" :key="index" :title="dish.name" :value="dish.status">
+                {{ dish.status }}
+            </van-cell>
+            <div>active: {{ active }}</div>
+            <!-- <van-cell v-for="(dish, index) in dishes" :key="index" :title="dish.name" :value="dish.status" /> -->
         </van-list>
 
 
@@ -71,7 +76,7 @@ export default {
             remainingTime: '',
             dishes: [],
             price: 0,
-            active: 0,
+            active: 1,
         };
     },
     mounted() {
@@ -84,20 +89,6 @@ export default {
         this.getDishes();
     },
     methods: {
-        updateActive() {
-            // 发送请求获取订单状态信息的逻辑
-            // 在请求成功后将订单状态信息赋值给 active 属性
-            // axios.get('http://localhost:8080/api/order/status').then((res) => {
-            //     this.active = res.data.status;
-            // });
-            // 测试用
-            // 当active小于等于3时，每次点击按钮active加1，否则active重置为0
-            if (this.active < 3) {
-                this.active++;
-            } else {
-                this.active = 0;
-            }
-        },
         getOrderDay() {
             // 发送请求获取订单日期信息的逻辑
             // 在请求成功后将订单日期信息赋值给 orderDay 属性
@@ -114,11 +105,49 @@ export default {
             this.remainingTime = '15';
         },
         getDishes() {
-            // 发送请求获取餐品信息的逻辑
-            // 在请求成功后将餐品信息赋值给 dishes 数组
-            axios.get('http://localhost/resphp/getOrder.php').then((res) => {
-                this.dishes = res.data.dishes;
-                this.price = res.data.price;
+            // axios.get('http://localhost/resphp/getOrder.php').then(response => {
+            //     this.dishes = response.data.dishes;
+            //     this.price = response.data.price;
+            // }).catch(error => {
+            //     console.log(error);
+            // });
+            const dishes = [
+                { name: '米饭', status: '未出餐' },
+                { name: '酱油鸡蛋炒饭', status: '未出餐' },
+                { name: '辣子鸡', status: '未出餐' },
+                { name: '加多宝', status: '未出餐' },
+            ];
+            this.dishes = dishes;
+            console.log(this.dishes);
+        },
+        serveDish() {
+            console.log('serveDish', this.dishes.length);
+            const index = this.dishes.findIndex(dish => dish.status === '未出餐');
+            if (index >= 0) {
+                this.dishes[index].status = '已出餐';
+            }
+        },
+        updateActive() {
+            // 发送请求获取订单状态信息的逻辑
+            // 在请求成功后将订单状态信息赋值给 active 属性
+            axios.get('http://localhost/resphp/status.php').then((res) => {
+                this.active = res.data.status;
+            }).catch((err) => {
+                console.log('请求失败', err);
+                // 测试用
+                console.log('serveDish', this.dishes.length);
+                const index = this.dishes.findIndex(dish => dish.status === '未出餐');
+                if (index >= 0) {
+                    this.dishes[index].status = '已出餐';
+                }
+                if (this.active === 1) {
+                    this.active = 2;
+                } else if (this.active === 2) {
+                    const allServed = this.dishes.every(dish => dish.status === '已出餐');
+                    if (allServed) {
+                        this.active = 3;
+                    }
+                }
             });
         },
     },
@@ -127,4 +156,11 @@ export default {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.testBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+</style>
