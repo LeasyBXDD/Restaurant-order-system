@@ -20,10 +20,19 @@
 
         <!-- 卡片 -->
         <!-- 日期选择按钮 -->
-        <van-button type="primary" @click="show = true" style="width: 100%; border-radius: 12px; box-shadow: 2px 2px 6px #d9d9d9,
-        -2px -2px 6px #ffffff;">选择日期</van-button>
+        <!-- <van-button type="primary" @click="show = true" style="width: 100%; border-radius: 12px; box-shadow: 2px 2px 6px #d9d9d9,
+        -2px -2px 6px #ffffff;">选择日期</van-button> -->
         <!-- <van-cell title="选择单个日期" :value="date" @click="show = true" /> -->
-        <van-calendar v-model:show="show" ref="calendar" @confirm="onConfirm" />
+        <!-- <van-calendar v-model:show="show" ref="calendar" @confirm="onConfirm" :min-date="minDate" :max-date="maxDate" /> -->
+        <!-- <van-cell title="选择日期" :value="time" is-link @click="show = true" />
+        <van-popup v-if="show" position="bottom">
+            <van-calendar v-model="date" :min-date="minDate" :max-date="maxDate" @confirm="getTime" />
+        </van-popup> -->
+        <div>
+            <van-cell title="选择日期" :value="time" is-link @click="showCalendar = true" />
+            <van-calendar v-model="date" :min-date="minDate" :max-date="maxDate" :show="showCalendar"
+                @confirm="onConfirm" />
+        </div>
 
         <div class="infocard">
             <!-- 时间和标题 -->
@@ -70,6 +79,8 @@ import Nav from '../components/Nav.vue';
 import 'vant/es/card/style';
 import 'vant/es/calendar/style';
 import 'vant/es/button/style';
+import 'vant/es/notice-bar/style';
+import 'vant/es/popup/style';
 
 
 export default {
@@ -83,6 +94,11 @@ export default {
             time: null,
             good: '',
             adviceList: [],
+            date: new Date(),
+            // show: false,
+            showCalendar: false, // 将 showCalendar 变量初始化为 false
+            minDate: new Date(2000, 0, 1),
+            maxDate: new Date(),
         };
     },
     mounted() {
@@ -111,12 +127,13 @@ export default {
             ];
         },
         getTime() {
-            // this.time = '2021-01-01'
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            const day = now.getDate();
+            const date = this.date;
+            console.log(date);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
             this.time = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+            this.showCalendar = false; // 选择日期后关闭日历弹窗
         },
         getGood() {
             this.good = '营养均衡';
@@ -130,51 +147,48 @@ export default {
             this.adviceList.push({ title: '午餐', desc: lunch.join('、') });
             this.adviceList.push({ title: '晚餐', desc: dinner.join('、') });
         },
-
-    },
-    setup() {
-        const date = ref('');
-        const show = ref(false);
-
-        const formatDate = (date) => `${date.getMonth() + 1}/${date.getDate()}`;
-        const onConfirm = (value) => {
-
-            show.value = false;
-            date.value = formatDate(value);
-
-            // 输出选择的日期
-            console.log(date.value);
+        formatDate(date) {
+            return `${date.getMonth() + 1}/${date.getDate()}`;
+        },
+        onConfirm(value) {
+            const date = new Date(value);
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const formattedDate = `${year}-${month}-${day}`;
+            console.log(formattedDate);
 
             // 发送选择的日期到后端
-            axios.get('http://localhost/resphp/getNtt.php', {
-                params: {
-                    user_id: 1,
-                    year: value.getFullYear().toString(),
-                    month: (value.getMonth() + 1).toString(),
-                    day: value.getDate().toString(),
-                },
-            }).then((res) => {
-                console.log(res);
-                // 将返回的数据传给EchartsOne组件
-                EchartsOne.props.data = res.data;
+            axios
+                .get('http://localhost/resphp/getNtt.php', {
+                    params: {
+                        id: 1,
+                        year: year,
+                        month: month,
+                        day: day,
+                    },
+                })
+                .then((res) => {
+                    console.log(res);
+                    // 将返回的数据传给EchartsOne组件
+                    EchartsOne.props.data = res.data;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            this.showCalendar = false; // 选择日期后关闭日历弹窗
+        },
 
-            }).catch((err) => {
-                console.log(err);
-            });
-        };
-
-        return {
-            date,
-            show,
-            onConfirm,
-        };
-    },
+    }
 
 };
 
 </script>
     
 <style scoped>
+@import 'vant/es/calendar/index.css';
+@import 'vant/es/popup/index.css';
+
 .infocard {
     margin-top: 10px;
     background-color: #fff;
