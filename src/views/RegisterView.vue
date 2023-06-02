@@ -8,19 +8,18 @@
             <h1>欢迎光临</h1>
         </van-row>
         <van-row justify="center">
-            <h5>登录前请先注册</h5>
+            <h5>简单两步，即可注册</h5>
         </van-row>
-        <van-row style="margin-bottom: 10px;">
-        </van-row>
-        <van-form @submit="onSubmit">
+        <van-row style="margin-bottom: 10px;"></van-row>
+        <van-form @submit="onSubmit" method="post">
             <van-cell-group inset>
-                <van-field v-model="username" name="电话" label="电话" placeholder="电话"
+                <van-field v-model="username" name="username" label="电话" placeholder="电话"
                     :rules="[{ required: true, message: '请填写电话号码' }]" />
-                <van-field v-model="password" type="password" name="密码" label="密码" placeholder="密码"
+                <van-field v-model="password" type="password" name="password" label="密码" placeholder="密码"
                     :rules="[{ required: true, message: '请填写密码' }]" />
             </van-cell-group>
             <div style="margin: 16px;">
-                <van-button round block type="default" to="/">
+                <van-button round block type="default" native-type="submit">
                     注册
                 </van-button>
             </div>
@@ -29,25 +28,22 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
-import 'vant/es/notify/style'
-import 'vant/es/field/style'
-import 'vant/es/button/style'
-import 'vant/es/cell-group/style'
-import 'vant/es/cell/style'
-import 'vant/es/form/style'
-import 'vant/es/row/style'
-import 'vant/es/col/style'
-import 'vant/es/notice-bar/style'
-import 'vant/es/image/style'
-
+import { ref } from 'vue';
+import axios from 'axios';
 
 export default {
     setup() {
         const username = ref('');
         const password = ref('');
-        const onSubmit = (values) => {
-            console.log('submit', values);
+
+        const onSubmit = (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            axios.post('http://localhost/resphp/register.php', formData).then((res) => {
+                console.log('注册成功', res);
+            }).catch((err) => {
+                console.log('注册失败', err);
+            });
         };
 
         return {
@@ -56,12 +52,7 @@ export default {
             onSubmit,
         };
     },
-    methods: {
-
-    }
 };
-
-
 </script>
 
 <style scoped></style>
