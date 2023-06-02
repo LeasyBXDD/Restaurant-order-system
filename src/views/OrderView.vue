@@ -1,9 +1,11 @@
 <template>
     <van-back-top bottom="100px" />
-    <van-notice-bar left-icon="volume-o" text="小众点评打卡本店即可获赠冰粉一份！仅限本周！" />
+    <van-notice-bar left-icon="volume-o" text="小众点评打卡本店即可获赠冰粉一份！仅限本周！"/>
     <!-- <van-search v-model="value" placeholder="请输入搜索关键词" /> -->
-    <van-search v-model="value" @change="changeInputValue" :focus="theFocus" placeholder="请输入菜品名称" @search="onSearch()" />
-
+    <!-- <van-search v-model="value" @change="changeInputValue" :focus="theFocus" placeholder="请输入菜品名称" @search="onSearch()" /> -->
+    <van-row>
+        <span style="margin-bottom: 10px;"></span>
+    </van-row>
     <van-row>
         <van-tabs v-model:active="active" @click-tab="onClickTab" type="card" style="width: 100%;">
             <van-tab title="主食">
