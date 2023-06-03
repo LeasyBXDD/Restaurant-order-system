@@ -11,7 +11,7 @@
             <h5>简单两步，即可注册</h5>
         </van-row>
         <van-row style="margin-bottom: 10px;"></van-row>
-        <van-form @submit="onSubmit" method="post">
+        <van-form @submit="onSubmit">
             <van-cell-group inset>
                 <van-field v-model="username" name="username" label="电话" placeholder="电话"
                     :rules="[{ required: true, message: '请填写电话号码' }]" />
@@ -19,40 +19,65 @@
                     :rules="[{ required: true, message: '请填写密码' }]" />
             </van-cell-group>
             <div style="margin: 16px;">
-                <van-button round block type="default" native-type="submit">
+                <van-button round block type="default" native-type="submit" @click="registerBtn">
                     注册
                 </van-button>
             </div>
         </van-form>
     </van-space>
 </template>
-
+  
 <script>
-import { ref } from 'vue';
-import axios from 'axios';
+import { ref } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
+import { showToast } from "vant";
+import 'vant/es/notify/style'
+import 'vant/es/field/style'
+import 'vant/es/button/style'
+import 'vant/es/cell-group/style'
+import 'vant/es/cell/style'
+import 'vant/es/form/style'
+import 'vant/es/row/style'
+import 'vant/es/col/style'
+import 'vant/es/notice-bar/style'
+import 'vant/es/image/style'
+
 
 export default {
     setup() {
-        const username = ref('');
-        const password = ref('');
-
-        const onSubmit = (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            axios.post('http://localhost/resphp/register.php', formData).then((res) => {
-                console.log('注册成功', res);
-            }).catch((err) => {
-                console.log('注册失败', err);
-            });
-        };
+        const router = useRouter();
+        const username = ref("");
+        const password = ref("");
 
         return {
             username,
             password,
-            onSubmit,
         };
+    },
+    methods: {
+        registerBtn() {
+            this.$router.push("/");
+        },
+        onSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.currentTarget);
+            const data = {};
+            for (const [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            axios
+                .post("http://localhost/resphp/register.php", data)
+                .then((res) => {
+                    Toast.success("注册成功");
+                    this.$router.push("/");
+                })
+                .catch((err) => {
+                    console.log("注册失败", err);
+                });
+        },
     },
 };
 </script>
-
+  
 <style scoped></style>

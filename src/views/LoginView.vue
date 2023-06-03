@@ -1,7 +1,5 @@
 <template>
     <van-space direction="vertical" fill>
-
-
         <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o" mode="closeable" scrollable>
             惊喜大酬宾！满1000减999！惊喜大酬宾！满1000减999！惊喜大酬宾！满1000减999！惊喜大酬宾！满1000减999！
         </van-notice-bar>
@@ -52,7 +50,6 @@
 
 <script>
 import axios from 'axios';
-
 import { ref, reactive } from 'vue';
 import router from '../router';
 import 'vant/es/notify/style'

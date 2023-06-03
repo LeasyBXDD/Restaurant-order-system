@@ -11,7 +11,7 @@
         <div class="my-info">
             <div class="my-info-left">
                 <div class="my-info-name">user001</div>
-                <div class="my-info-id">13958958107</div>
+                <div class="my-info-id">13732580326</div>
             </div>
             <div class="my-info-right">
                 <img src="https://img.yzcdn.cn/vant/cat.jpeg" alt="" />
@@ -43,7 +43,16 @@
             </div>
             <!-- 图表 -->
             <div style="max-height: 400px; padding-bottom: 18px;">
-                <EchartsOne></EchartsOne>
+                <div>
+                    <div v-if="time === '2023-06-01'">
+                        <!-- 显示 EchartsTwo 组件 -->
+                        <EchartsTwo />
+                    </div>
+                    <div v-else>
+                        <!-- 显示 EchartsOne 组件 -->
+                        <EchartsOne />
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -75,6 +84,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { timePickerProps } from 'vant';
 import EchartsOne from '../components/EchartsOne.vue';
+import EchartsTwo from '../components/EchartsTwo.vue';
 import Nav from '../components/Nav.vue';
 import 'vant/es/card/style';
 import 'vant/es/calendar/style';
@@ -87,17 +97,18 @@ export default {
     components: {
         Nav,
         EchartsOne,
+        EchartsTwo,
     },
     data() {
         return {
             noticeList: [], // 轮播图的内容数组
-            time: null,
+            time: '2023-06-04',
             good: '',
             adviceList: [],
             date: new Date(),
             // show: false,
             showCalendar: false, // 将 showCalendar 变量初始化为 false
-            minDate: new Date(2000, 0, 1),
+            minDate: new Date(2023, 1, 1),
             maxDate: new Date(),
         };
     },
@@ -151,7 +162,8 @@ export default {
             return `${date.getMonth() + 1}/${date.getDate()}`;
         },
         onConfirm(value) {
-            const date = new Date(value);
+            this.time = '2023-06-01';
+            let date = new Date(value);
             const year = date.getFullYear();
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
             const day = date.getDate().toString().padStart(2, '0');
@@ -171,13 +183,15 @@ export default {
                 .then((res) => {
                     console.log(res);
                     // 将返回的数据传给EchartsOne组件
-                    EchartsOne.props.data = res.data;
+                    // EchartsOne.props.data = res.data;
                 })
                 .catch((err) => {
                     console.log(err);
                 });
+            date = this.date;
             this.showCalendar = false; // 选择日期后关闭日历弹窗
-        },
+        }
+
 
     }
 
