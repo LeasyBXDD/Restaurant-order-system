@@ -162,10 +162,11 @@ export default {
             return `${date.getMonth() + 1}/${date.getDate()}`;
         },
         onConfirm(value) {
+            this.good = '缺乏脂肪和维生素';
             // 修改饮食建议列表
             const breakfast = ['白粥', '水果', '蔬菜'];
             const lunch = ['米饭', '鸡蛋', '蔬菜'];
-            const dinner = ['米饭', '鱼', '蔬菜'];
+            const dinner = ['米饭', '蔬菜'];
             this.adviceList = [];
             this.adviceList.push({ title: '早餐', desc: breakfast.join('、') });
             this.adviceList.push({ title: '午餐', desc: lunch.join('、') });

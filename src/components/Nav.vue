@@ -1,13 +1,8 @@
 <template>
     <van-tabbar v-model="active" route>
-        <van-tabbar-item replace to="/order">
-            <span>点餐</span>
-            <template #icon="props">
-                <img :src="props.active ? icon.active : icon.inactive" />
-            </template>
-        </van-tabbar-item>
-        <van-tabbar-item icon="search" replace to="/state">状态</van-tabbar-item>
-        <van-tabbar-item icon="setting-o" replace to="/myinfo">我的</van-tabbar-item>
+        <van-tabbar-item icon="shopping-cart-o" replace to="/order">点餐</van-tabbar-item>
+        <van-tabbar-item icon="home-o" replace to="/state">状态</van-tabbar-item>
+        <van-tabbar-item icon="contact" replace to="/myinfo">我的</van-tabbar-item>
     </van-tabbar>
 </template>
 

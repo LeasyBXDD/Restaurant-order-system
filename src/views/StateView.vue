@@ -22,7 +22,7 @@
             </van-col>
         </van-row>
 
-        <van-card :price="price" desc="每天都要好好吃饭哦" :title="`${orderDay} ${orderTime} 的订单`"
+        <van-card :price="133" desc="每天都要好好吃饭哦" :title="`${orderDay} ${orderTime} 的订单`"
             thumb="https://www.logo9.net/userfiles/images/288z4.jpg">
             <!-- 刷新状态按钮 -->
         </van-card>
