@@ -1,9 +1,9 @@
 export const data = {
-    labels: ['蛋白质', '碳水化合物','脂肪','维生素'],
+    labels: ['蛋白质', '碳水化合物'],
     datasets: [
         {
-            backgroundColor: ['#41B883', '#E46651', '#00D8FF','#DD1B16'],
-            data: [90, 20, 60, 80]
+            backgroundColor: ['#41B883','#DD1B16'],
+            data: [80, 8]
         }
     ]
 }

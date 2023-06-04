@@ -1,6 +1,6 @@
 <template>
     <van-back-top bottom="100px" />
-    <van-notice-bar left-icon="volume-o" text="小众点评打卡本店即可获赠冰粉一份！仅限本周！"/>
+    <van-notice-bar left-icon="volume-o" text="小众点评打卡本店即可获赠冰粉一份！仅限本周！" />
     <!-- <van-search v-model="value" placeholder="请输入搜索关键词" /> -->
     <!-- <van-search v-model="value" @change="changeInputValue" :focus="theFocus" placeholder="请输入菜品名称" @search="onSearch()" /> -->
     <van-row>
@@ -192,7 +192,7 @@ export default {
             user_id: 1,
             name: '',
             img: '',
-            dish_flavor: 'default',
+            dish_flavor: 1,
             amount: 0,
             theFocus: false,
             backgroundColorYes: '#1989fa',
@@ -366,7 +366,7 @@ export default {
             // 给数据库中的dish表中的dish_weight字段加1
             axios.get('http://localhost/resphp/updateShopping.php', {
                 params: {
-                    number: dish.number + 1,
+                    number: 1,
                     amount: dish.dish_price,
                     // dish_flavor: dish.dish_flavor,
                     // dish_id: dish.dish_id,
@@ -376,6 +376,10 @@ export default {
                     dish_id: 3,
                 },
             }).then(response => {
+                // 在赋值之后判断 dish.number 的值
+                if (dish.number !== 1 && dish.number !== 0) {
+                    dish.number = 0;
+                }
                 if (response.data[0].code === 1) {
                     // 给数据库中的dish表中的dish_weight字段加1
                     dish.dish_weight += 1;

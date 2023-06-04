@@ -36,7 +36,7 @@
 
         <div class="infocard">
             <!-- 时间和标题 -->
-            <p style="color: #999; font-size: 14px; padding: 10px; margin: 10px; margin-bottom: -10px;">今日饮食分析</p>
+            <p style="color: #999; font-size: 14px; padding: 10px; margin: 10px; margin-bottom: -10px;">饮食营养分析</p>
             <div style="margin-left: 20px; padding-top: 10px;">
                 <p>{{ time }}</p>
                 <h1>{{ good }}</h1>
@@ -44,7 +44,7 @@
             <!-- 图表 -->
             <div style="max-height: 400px; padding-bottom: 18px;">
                 <div>
-                    <div v-if="time === '2023-06-01'">
+                    <div v-if="time === '2023-05-29'">
                         <!-- 显示 EchartsTwo 组件 -->
                         <EchartsTwo />
                     </div>
@@ -162,7 +162,15 @@ export default {
             return `${date.getMonth() + 1}/${date.getDate()}`;
         },
         onConfirm(value) {
-            this.time = '2023-06-01';
+            // 修改饮食建议列表
+            const breakfast = ['白粥', '水果', '蔬菜'];
+            const lunch = ['米饭', '鸡蛋', '蔬菜'];
+            const dinner = ['米饭', '鱼', '蔬菜'];
+            this.adviceList = [];
+            this.adviceList.push({ title: '早餐', desc: breakfast.join('、') });
+            this.adviceList.push({ title: '午餐', desc: lunch.join('、') });
+            this.adviceList.push({ title: '晚餐', desc: dinner.join('、') });
+            this.time = '2023-05-29';
             let date = new Date(value);
             const year = date.getFullYear();
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
