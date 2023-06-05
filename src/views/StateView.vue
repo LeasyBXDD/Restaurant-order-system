@@ -22,7 +22,7 @@
             </van-col>
         </van-row>
 
-        <van-card :price="133" desc="每天都要好好吃饭哦" :title="`${orderDay} ${orderTime} 的订单`"
+        <van-card :price="110" desc="每天都要好好吃饭哦" :title="`${orderDay} ${orderTime} 的订单`"
             thumb="https://www.logo9.net/userfiles/images/288z4.jpg">
             <!-- 刷新状态按钮 -->
         </van-card>
@@ -106,7 +106,7 @@ export default {
             this.remainingTime = '20';
         },
         getDishes() {
-            axios.get('http://localhost/resphp/getOrder.php').then(response => {
+            axios.get('http://localhost/web20230105/php/getOrder.php').then(response => {
                 // this.dishes = response.data.dishes;
                 // this.price = response.data.price;
                 // 测试数据
@@ -142,7 +142,7 @@ export default {
             // 发送请求获取订单状态信息的逻辑
             // 在请求成功后将订单状态信息赋值给 active 属性
             const id = 1; // replace with the correct user id
-            axios.get(`http://localhost/resphp/getOrder.php?id=${id}`)
+            axios.get(`http://localhost/web20230105/php/getOrder.php?id=${id}`)
                 .then(response => {
                     if (response.data[0].code === 1) {
                         const orders = response.data[0].data;

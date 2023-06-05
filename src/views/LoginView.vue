@@ -100,7 +100,7 @@ export default {
     },
     methods: {
         onSubmit() {
-            axios.post("http://localhost/resphp/loginCheck.php", {
+            axios.post("http://localhost/web20230105/php/loginCheck.php", {
                 phone: this.username,
                 pwd: this.password
             }, {

@@ -181,7 +181,7 @@ export default {
 
             // 发送选择的日期到后端
             axios
-                .get('http://localhost/resphp/getNtt.php', {
+                .get('http://localhost/web20230105/php/getNtt.php', {
                     params: {
                         id: 1,
                         year: year,

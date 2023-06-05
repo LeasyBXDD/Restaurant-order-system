@@ -67,7 +67,7 @@ export default {
                 data[key] = value;
             }
             axios
-                .post("http://localhost/resphp/register.php", data)
+                .post("http://localhost/wen20230105/php/register.php", data)
                 .then((res) => {
                     Toast.success("注册成功");
                     this.$router.push("/");

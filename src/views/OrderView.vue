@@ -211,7 +211,7 @@ export default {
         getTags1() {
             // 发送请求获取标签数据
             const id = 1; // replace with the correct category id
-            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+            axios.get(`http://localhost/web20230105/php/getDish.php?id=${id}`).then(response => {
                 if (response.data[0].code === 1) {
                     this.tags1 = response.data[0].data;
                     console.log(this.tags1);
@@ -221,7 +221,7 @@ export default {
         getTags2() {
             // 发送请求获取标签数据
             const id = 2; // replace with the correct category id
-            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+            axios.get(`http://localhost/web20230105/php/getDish.php?id=${id}`).then(response => {
                 if (response.data[0].code === 1) {
                     this.tags2 = response.data[0].data;
                     console.log(this.tags2);
@@ -231,7 +231,7 @@ export default {
         getTags3() {
             // 发送请求获取标签数据
             const id = 3; // replace with the correct category id
-            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+            axios.get(`http://localhost/web20230105/php/getDish.php?id=${id}`).then(response => {
                 if (response.data[0].code === 1) {
                     this.tags3 = response.data[0].data;
                     console.log(this.tags3);
@@ -241,7 +241,7 @@ export default {
         getTags4() {
             // 发送请求获取标签数据
             const id = 4; // replace with the correct category id
-            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+            axios.get(`http://localhost/web20230105/php/getDish.php?id=${id}`).then(response => {
                 if (response.data[0].code === 1) {
                     this.tags4 = response.data[0].data;
                     console.log(this.tags4);
@@ -250,13 +250,13 @@ export default {
         },
         getDishes1() {
             const id = 1; // replace with the correct category id
-            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+            axios.get(`http://localhost/web20230105/php/getDish.php?id=${id}`).then(response => {
                 if (response.data[0].code === 1) {
                     this.dishes1 = response.data[0].data;
                 }
             });
 
-            axios.get(`http://localhost/resphp/getShopping.php?id=${id}`)
+            axios.get(`http://localhost/web20230105/php/getShopping.php?id=${id}`)
                 .then(response => {
                     console.log(response.data);
                     for (let i = 0; i < this.dishes1.length; i++) {
@@ -276,13 +276,13 @@ export default {
         },
         getDishes2() {
             const id = 2; // replace with the correct category id
-            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+            axios.get(`http://localhost/web20230105/php/getDish.php?id=${id}`).then(response => {
                 if (response.data[0].code === 1) {
                     this.dishes2 = response.data[0].data;
                 }
             });
 
-            axios.get(`http://localhost/resphp/getShopping.php?id=${id}`)
+            axios.get(`http://localhost/web20230105/php/getShopping.php?id=${id}`)
                 .then(response => {
                     console.log(response.data);
                     for (let i = 0; i < this.dishes2.length; i++) {
@@ -297,13 +297,13 @@ export default {
         },
         getDishes3() {
             const id = 3; // replace with the correct category id
-            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+            axios.get(`http://localhost/web20230105/php/getDish.php?id=${id}`).then(response => {
                 if (response.data[0].code === 1) {
                     this.dishes3 = response.data[0].data;
                 }
             });
 
-            axios.get(`http://localhost/resphp/getShopping.php?id=${id}`)
+            axios.get(`http://localhost/web20230105/php/getShopping.php?id=${id}`)
                 .then(response => {
                     console.log(response.data);
                     for (let i = 0; i < this.dishes3.length; i++) {
@@ -318,13 +318,13 @@ export default {
         },
         getDishes4() {
             const id = 4; // replace with the correct category id
-            axios.get(`http://localhost/resphp/getDish.php?id=${id}`).then(response => {
+            axios.get(`http://localhost/web20230105/php/getDish.php?id=${id}`).then(response => {
                 if (response.data[0].code === 1) {
                     this.dishes4 = response.data[0].data;
                 }
             });
 
-            axios.get(`http://localhost/resphp/getShopping.php?id=${id}`)
+            axios.get(`http://localhost/web20230105/php/getShopping.php?id=${id}`)
                 .then(response => {
                     console.log(response.data);
                     for (let i = 0; i < this.dishes4.length; i++) {
@@ -364,7 +364,7 @@ export default {
             localStorage.setItem('cartTotalQuantity', this.cartTotalQuantity);
 
             // 给数据库中的dish表中的dish_weight字段加1
-            axios.get('http://localhost/resphp/updateShopping.php', {
+            axios.get('http://localhost/web20230105/php/updateShopping.php', {
                 params: {
                     number: 1,
                     amount: dish.dish_price,
@@ -392,7 +392,7 @@ export default {
             });
 
             // send GET request
-            axios.get(`http://localhost/resphp/addShopping.php`
+            axios.get(`http://localhost/web20230105/php/addShopping.php`
                 , {
                     params: {
                         dish_id: this.cart[0].dish_id,
@@ -432,7 +432,7 @@ export default {
             localStorage.setItem('cartTotalQuantity', this.cartTotalQuantity);
 
             // 给数据库中的dish表中的dish_weight字段减1
-            axios.get('http://localhost/resphp/updateShopping.php', {
+            axios.get('http://localhost/web20230105/php/updateShopping.php', {
                 params: {
                     number: dish.number - 1,
                     amount: dish.dish_price,
