@@ -1,46 +1,4 @@
-# restauranttwo
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-2022-2023-2学期
-
-# 《Web程序设计》课程设计文档
-
-**班级** **计算机216** **学号 2021212205048** **姓名** **郭馨蔓**
-
-**班级** **计算机217** **学号 2021212205098** **姓名** **李奕哲**
-
-**班级** **软工201** **学号 2020212205135** **姓名** **傅贤杨**
-
-**班级** **软工201** **学号 2020212205171** **姓名** **韩佳梁**
-
-**任课教师：张佳**
+> Restaurant-order-system
 
 # 1. 选题及作品名称
 
@@ -1624,44 +1582,35 @@ l 用户登录：本功能主要实现用户的登录操作。
 
 ​          msg:"数量不为1"
 
- 
 
- 
 
- 
 
-……
 
-# 4. 软件说明
+This template should help get you started developing with Vue 3 in Vite.
 
-## 4.1 开发环境说明
+## Recommended IDE Setup
 
-IDE：VScode
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## 4.2 运行环境说明
+## Customize configuration
 
-Wampserver
+See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-Google Chrome
+## Project Setup
 
-# 5. 开发计划
+```sh
+npm install
+```
 
-## 5.1 时间安排
+### Compile and Hot-Reload for Development
 
-5.10～5.14： 小组讨论并完成计划书书写
+```sh
+npm run dev
+```
 
-5.15～5.24： 前后端分别开发
+### Compile and Minify for Production
 
-5.25～5.29： 前后端联调
+```sh
+npm run build
+```
 
-5.30～6.2: 整理代码完善计划书，完成作业提交
-
-## 5.2 项目分工
-
-小组长：郭馨蔓，负责组织开会、设计书、设计、完成部分前端、服务端开发
-
-前端：李奕哲、韩佳梁，负责前端开发，设计
-
-后端：傅贤杨，负责服务端开发，设计
-
-# 6. 非原创部分说明
